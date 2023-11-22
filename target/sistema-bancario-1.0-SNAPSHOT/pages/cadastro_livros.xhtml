@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="titulo"> - Cadastro Livros</ui:define>
+    <ui:define name="conteudo">
+        <p:panel id="painel" header="Cadastro Livro">
+
+            <p:outputPanel rendered="#{beanPrincipalLivro.livro!= null}">
+                <h:form id="form-cadastro"> 
+                    <p:growl /> <!-- mensagem de erro -->
+                    <p:panelGrid columns="2" columnClasses="ui-g-1, ui-g-2">
+
+                        <p:outputLabel value="Titulo: "/>
+                        <p:inputText value="#{beanPrincipalLivro.livro.titulo}"
+                                     required="true" requiredMessage="Informe o titulo!"/>
+
+                        <p:outputLabel value="Sinopse: "/>
+                        <p:inputText value="#{beanPrincipalLivro.livro.sinopse}" 
+                                     required="true" requiredMessage="Informe a cidade!"/>
+
+                        <p:outputLabel value="Ano pulicação: "/>
+                        <p:inputNumber value="#{beanPrincipalLivro.livro.anoPublicacao}" 
+                                       decimalPlaces="0" minValue="1900"/>
+
+                        <p:outputLabel value="Gênero:  "/>
+                        <p:selectOneMenu value="#{beanPrincipalLivro.livro.genero}">
+                            <f:selectItem itemLabel="(Selecione)" noSelectionOption="true"/>
+                            <f:selectItems value="#{beanPrincipalLivro.generos}" var="g"/>                          
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Editora" />
+                        <p:selectOneMenu value="#{beanPrincipalLivro.livro.editora}" converter="editoraConverter">
+                            <f:selectItem itemLabel="(selecione)" noSelectionOption = "true" />
+                            <f:selectItems value="#{beanPrincipalLivro.editoras}" var="editora" itemLabel="#{editora.nome}" />
+                        </p:selectOneMenu>
+                        
+                            
+
+
+
+
+
+                    </p:panelGrid>
+                    <p:commandButton value="Salvar" style="margin-right: 15px" actionListener="#{beanPrincipalLivro.salvar()}"
+                                     update="@form tabela painel"/> <!-- /*esse recurso se chama ajax*/ -->
+
+                    <!--ajax  fremwor baseado em js que troca informaçãoes coma aplicação 
+                    e é capaz de atualizar partes isoadas do código  */ -->
+
+                    <p:commandButton value="Cancelar" actionListener="#{beanPrincipalLivro.cancelar()}" 
+                                     update="painel" immediate="true"/>
+                </h:form>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{beanPrincipalLivro.livro == null}">
+                <h:form id="tabela">
+                    <p:commandButton value="Novo" actionListener="#{beanPrincipalLivro.novo()}" update="painel"                                     />
+                    <p:dataTable  value="#{beanPrincipalLivro.livros}" var="liv"
+                                  reflow="true">
+
+                        <p:column headerText="Titulo:   ">
+                            <p:outputLabel value="#{liv.titulo}"/>
+                        </p:column>
+                        <p:column headerText="Sinopse:  ">
+                            <p:outputLabel value="#{liv.sinopse}"/>
+                        </p:column>
+                        <p:column headerText="Ano Publicação: ">
+                            <p:outputLabel value="#{liv.anoPublicacao}"/>
+                        </p:column>
+                        <p:column headerText="Gênero: ">
+                            <p:outputLabel value="#{liv.genero}"/>
+                        </p:column>
+                        <p:column headerText="Editora: ">
+                            <p:outputLabel value="#{liv.editora.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Opções" >
+                            <p:commandButton value="Editar" style="margin-right: 15px" actionListener="#{beanPrincipalLivro.editar(liv)}"
+                                             update="form-cadastro painel"/>
+                            <p:commandButton value="Remover" actionListener="#{beanPrincipalLivro.remover(liv)}"
+                                             update="form-cadastro painel"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </p:outputPanel>
+        </p:panel>
+   </ui:define>
+</ui:composition>

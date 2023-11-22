@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Sistema Livros <ui:insert name="titulo"/></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="início" outcome="/pages/index.jsf"/>
+                    <p:menuitem value="Autor" outcome="/pages/cadastro_autor.jsf"/>
+                    <p:menuitem value="Editora" outcome="/pages/index_editora.jsf"/>
+                    <p:menuitem value="Livro" outcome="/pages/cadastro_livros.jsf"/>
+                    <p:menuitem value="Aluno" outcome="/pages/cadastro_aluno.jsf"/>
+                    <p:menuitem value="Curso" outcome="/pages/cadastro_curso.jsf"/>
+                    <p:menuitem value="Disciplina" outcome="/pages/cadastro_disciplina.jsf"/>
+                    <p:menuitem value="Sair" actionListener="#{beanLogin.logout()}"/>
+                </p:menubar>
+
+            </h:form>
+        </div>
+        <div>
+            <ui:insert name="conteudo">
+                <p:staticMessage summary="Bem vindo, #{beanIndex.usuario.nome}" severity="info" style="width: 100%; margin-top:5px;"/>
+            </ui:insert>
+        </div>
+        <!--        <div style="width: 100%; border: solid #ccc 1px; border-radius: 5px; padding: 15px;  ">
+                </div>-->
+    </h:body>
+</html>

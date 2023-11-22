@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="titulo"> - Cadastro curso</ui:define>
+    <ui:define name="conteudo">
+        <p:panel id="painel" header="Cadastro curso">
+
+            <p:outputPanel rendered="#{beanCurso.curso!= null}">
+                <h:form id="form-cadastro"> 
+                    <p:growl /> <!-- mensagem de erro -->
+                    <p:panelGrid columns="2" columnClasses="ui-g-1, ui-g-2">
+
+                        <p:outputLabel value="Nome do curso: "/>
+                        <p:inputText value="#{beanCurso.curso.nome}"
+                                     required="true" requiredMessage="Informe o nome!"/>
+
+                        <p:outputLabel value="Descrição "/>
+                        <p:inputText value="#{beanCurso.curso.descricao}" 
+                                     required="true" requiredMessage="Informe a nacionalidade!"/>
+                        <p:selectCheckboxMenu id="multiple"
+                                              filter="true" filterMatchMode="startsWith"
+                                              label="Cities" multiple="true" emptyLabel="Please select..." updateLabel="true"
+                                              style="min-width: 15rem" panelStyle="width: 30rem" scrollHeight="250"
+                                              value="#{beanCurso.curso.alunos}" converter="converterAluno">
+                            <f:attribute name="collectionType" value="java.util.HashSet" />
+                            <p:ajax event="itemUnselect" listener="#{beanCurso.alunos}"/>
+                            <f:selectItems value="#{beanCurso.alunos}" var="aluno" itemLabel="#{aluno.nome}"/>
+                        </p:selectCheckboxMenu>
+
+                    </p:panelGrid>
+                    <p:commandButton value="Salvar" style="margin-right: 5px" actionListener="#{beanCurso.salvar()}"
+                                     update="@form tabela painel"/> <!-- /*esse recurso se chama ajax*/ -->
+
+                    <!--ajax  fremwor baseado em js que troca informaçãoes coma aplicação 
+                    e é capaz de atualizar partes isoadas do código  */ -->
+
+                    <p:commandButton value="Cancelar" actionListener="#{beanCurso.cancelar()}" 
+                                     update="painel" immediate="true"/>
+                </h:form>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{beanCurso.curso == null}">
+                <h:form id="tabela">
+                    <p:commandButton value="Novo" actionListener="#{beanCurso.novo()}" update="painel"                                     />
+                    <p:dataTable  value="#{beanCurso.cursos}" var="cur"
+                                  reflow="true">
+
+                        <p:column headerText="Nome:  ">
+                            <p:outputLabel value="#{cur.nome}"/>
+                        </p:column>
+                        <p:column headerText="Descrição ">
+                            <p:outputLabel value="#{cur.descricao}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Alunos ">
+                            <p:outputLabel value="#{cur.alunos}"/>
+                        </p:column>
+
+                        <p:column headerText="Opções" >
+                            <p:commandButton value="Editar" style="margin-right: 15px" actionListener="#{beanCurso.editar(cur)}"
+                                             update="form-cadastro painel"/>
+                            <p:commandButton value="Remover" actionListener="#{beanCurso.remover(cur)}"
+                                             update="form-cadastro painel"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </p:outputPanel>
+        </p:panel>
+    </ui:define>
+</ui:composition>
