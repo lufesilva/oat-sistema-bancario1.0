@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="../../template_gerente.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="titulo"> - Inicio Gerente</ui:define> 
+
+    <ui:define name="conteudo" >
+
+        <div style="margin-left: 9%">
+            <h:panelGrid columns="4" style="margin-top: 80px">
+                <p:card style="width: 15em; height: 25em; text-align: center">
+                    <f:facet name="header">
+                        <img alt="user header" src="../../imge/img02.avif"/>
+                    </f:facet>
+                    <f:facet name="title">
+                        Clientes
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        Cadastro de clientes
+                    </f:facet>
+                    <p:commandButton value="Acessar" styleClass="ui-button-secondary"  />
+                </p:card>
+
+                <p:card style="width: 15em; height: 25em; margin-left: 30px; text-align: center">
+                    <f:facet name="header">
+                        <img alt="user header" src="../../imge/img02.avif"/>           
+                    </f:facet>
+                    <f:facet name="title">
+                        Agências
+                    </f:facet>
+                    <f:facet name="subtitle">
+                       Cadastro de Agências
+                    </f:facet>
+                    <p:commandButton value="Acessar" styleClass="ui-button-secondary"  />
+                </p:card>
+
+                <p:card style="width: 15em; height: 25em; margin-left: 30px; text-align: center">
+                    <f:facet name="header">
+                        <img alt="user header" src="../../imge/img02.avif"/>         
+                    </f:facet>
+                    <f:facet name="title">
+                        Contas
+                    </f:facet>
+                    <f:facet name="subtitle">
+                       Cadastro de Contas
+                    </f:facet>
+                    <p:commandButton value="Acessar" styleClass="ui-button-secondary" />
+                </p:card>
+
+                <p:card style="width: 15em; height: 25em; margin-left: 30px; text-align: center">
+                    <f:facet name="header">
+                        <img alt="user header" src="../../imge/img02.avif"/>
+                    </f:facet>
+                    <f:facet name="title">
+                       Limites
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        Limites de contas
+                    </f:facet>
+                    <p:commandButton value="Acessar" styleClass="ui-button-secondary" />
+                </p:card>
+            </h:panelGrid>
+        </div>
+
+    </ui:define>
+</ui:composition>

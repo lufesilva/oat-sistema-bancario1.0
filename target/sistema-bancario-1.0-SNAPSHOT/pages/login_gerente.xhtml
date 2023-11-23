@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>EducAtiv</title>
+        <title>Sistema Bancário</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
 
@@ -18,23 +18,23 @@
                     <p:panelGrid  columns="1" columnClasses="ui-grid-col-6" >  
                         <p:toolbar >
                             <f:facet name="left" >
-                                <h:outputText value="Login Aluno"  /> 
+                                <h:outputText value="Login Gerente"  /> 
                             </f:facet>                 
                         </p:toolbar> 
                        
                         <h:panelGroup> 
                             <p:outputLabel value="Email: " style="font-weight:bold;"/>
-                            <p:inputText style=" width:250px" id="nome" value="#{beanAluno.nomeLogin}" 
+                            <p:inputText style=" width:250px" id="nome" value="#{beanGerente.emailLogin}" 
                                          required="true" requiredMessage="Informe o nome!"   />
                         </h:panelGroup>
                         <h:panelGroup>
                             <p:outputLabel value="Senha: " style="font-weight:bold" />
-                            <p:password style=" width:250px" id="senha" value="#{beanAluno.senhaLogin}" 
+                            <p:password style=" width:250px" id="senha" value="#{beanGerente.senhaLogin}" 
                                         toggleMask="true" redisplay="true" rendered="true" required="true" 
                                         requiredMessage="Informe a senha!"/>
                         </h:panelGroup>
                         <p:messages/>
-                        <p:commandButton value="Entrar" action="#{beanAluno.verificaSenha()}" update="@form" styleClass="ui-button-secondary" />
+                        <p:commandButton value="Entrar" action="#{beanGerente.verificaSenha()}" update="@form" styleClass="ui-button-secondary" />
                         </p:panelGrid>
                 </div>  
             </h:form>
