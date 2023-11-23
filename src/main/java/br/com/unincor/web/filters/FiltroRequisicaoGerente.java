@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alunos
  */
-@WebFilter("/pages/*")
-public class FiltroRequisicao implements Filter {
+@WebFilter("/pages/cliente/*")
+public class FiltroRequisicaoGerente implements Filter {
     
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,21 +31,19 @@ public class FiltroRequisicao implements Filter {
     
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+      // System.out.println("Requisição Filtrada");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpSession session = httpServletRequest.getSession();
-        
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        HttpSession httpSession = httpServletRequest.getSession(true);
         
         
-        if(session != null){
-            Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        if(httpSession.getAttribute("gerenteLogado") == null) {
             
-            if(usuario != null){
-                chain.doFilter(request, response);
-                return;
-            }
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/pages/login_gerente.jsf");
+            return;
         }
-        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.jsf");
+
+        chain.doFilter(request, response);
     }
     
     @Override
