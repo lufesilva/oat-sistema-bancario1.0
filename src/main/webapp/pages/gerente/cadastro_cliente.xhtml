@@ -7,54 +7,79 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:define name="titulo"> - Cadastro Usuário</ui:define> 
+    <ui:define name="titulo"> - Cadastro Cliente</ui:define> 
 
     <ui:define name="conteudo" >
-        <p:panel id="painel" header="Cadastro Usuário">
+        <p:panel id="painel" header="Cadastro Cliente">
 
-            <p:outputPanel rendered="#{beanDisciplina.disciplina != null}">
+            <p:outputPanel rendered="#{beanCliente.cliente != null}">
                 <h:form id="form-cadastro"> 
                     <p:growl /> 
 
                     <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
 
-                        <p:outputLabel value="Nome da disciplina:" style="margin-left: 50%"/>
-                        <p:inputText value="#{beanDisciplina.disciplina.nome}" style="width: 80%"
+                        <p:outputLabel value="Nome:" style="margin-left: 50%"/>
+                        <p:inputText value="#{beanCliente.cliente.nome}" style="width: 80%"
                                      required="true" requiredMessage="Informe o nome!"/>
+
+                        <p:outputLabel value="Email: " style="margin-left: 50%"/>
+                        <p:inputText value="#{beanCliente.cliente.email}" style="width: 80%"
+                                     required="true" requiredMessage="Informe o email!"/>
+
+                        <p:outputLabel value="CPF: " style="margin-left: 50%"/>
+                        <p:inputText value="#{beanCliente.cliente.cpf}" style="width: 80%"
+                                     required="true" requiredMessage="Informe o cpf!"/>
+                        
+
+                        <p:outputLabel styleClass="col-fixed" style="margin-left: 50%" value="Senha: " />
+                        <p:password id="pwd1" value="#{beanCliente.cliente.senha}"  required="true"
+                                   toggleMask="true" requiredMessage="Informe uma senha!" />
+
+                        <p:outputLabel styleClass="col-fixed" style="margin-left: 50%" value="Senha: "/>
+                        <p:password id="pwd2" value="#{beanCliente.confirmarSenha}"  required="true"
+                                    toggleMask="true" requiredMessage="Confirme a senha informada!"/>
                     </p:panelGrid>
-                                       
+
 
                     <p:commandButton value="Salvar" style="margin-left: 80%; margin-right: 5px; margin-top: 10px"
-                                     styleClass="ui-button-secondary" actionListener="#{beanDisciplina.salvar()}"
-                                     update="@form tabela painel"/>
+                                     styleClass="ui-button-secondary" actionListener="#{beanCliente.salvar()}"
+                                     update="@form tabela painel" />
 
-                    <p:commandButton value="Cancelar" actionListener="#{beanDisciplina.cancelar()}" styleClass="ui-button-secondary"
+                    <p:commandButton value="Cancelar" actionListener="#{beanCliente.cancelar()}" styleClass="ui-button-secondary"
                                      update="painel" immediate="true"/>
                 </h:form>
             </p:outputPanel>
-            <p:outputPanel rendered="#{beanDisciplina.disciplina == null}">
+            <p:outputPanel rendered="#{beanCliente.cliente == null}">
                 <h:form id="tabela">
-                    <p:commandButton value="Novo" actionListener="#{beanDisciplina.novo()}" 
+                    <p:commandButton value="Novo" actionListener="#{beanCliente.novo()}" 
                                      styleClass="ui-button-secondary"
                                      update="painel"/>
-                    <p:dataTable  value="#{beanDisciplina.disciplinas}" style="margin-top: 15px" var="dis"
-                                  reflow="true" scrollable="true" scrollHeight="280">
+                    <p:dataTable  value="#{beanCliente.clientes}" style="margin-top: 15px" var="cli"
+                                  reflow="true" scrollable="true" scrollHeight="340">
 
-                        <p:column headerText="Nome:"  sortBy="#{dis.nome}" >
-                            <p:outputLabel value="#{dis.nome}"/>
+                        <p:column headerText="Nome:"  sortBy="#{cli.nome}" >
+                            <p:outputLabel value="#{cli.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Cpf: " >
+                            <p:outputLabel value="#{cli.cpf}"/>
+                        </p:column>
+
+                        <p:column headerText="Email: " >
+                            <p:outputLabel value="#{cli.email}"/>
                         </p:column>
 
 
                         <p:column headerText="Opções">
 
                             <p:tooltip position="top" for="@next" value="Editar"/>
-                            <p:commandButton icon="pi pi-file-edit" style="margin-right: 15px; width: 40px"   styleClass="ui-button-secondary" actionListener="#{beanDisciplina.editar(dis)}"
+                            <p:commandButton icon="pi pi-file-edit" style="margin-right: 15px; width: 40px"   styleClass="ui-button-secondary" actionListener="#{beanCliente.editar(cli)}"
                                              update="form-cadastro painel"/>
                             <p:tooltip position="top" for="@next" value="Excluir"/>
-                            <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanDisciplina.remover(dis)}"
+                            <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanCliente.remover(cli)}"
                                              update="form-cadastro painel">
 
-                                <p:confirm header="Confirmação" message="Deseja remover a disciplina: #{dis.nome}?" icon="pi pi-info-circle"/>
+                                <p:confirm header="Confirmação" message="Deseja remover a disciplina: #{cli.nome}?" icon="pi pi-info-circle"/>
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="../../template_gerente.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="titulo"> - Cadastro Cliente</ui:define> 
+
+    <ui:define name="conteudo" >
+        <p:panel id="painel" header="Cadastro Cliente">
+
+            <p:outputPanel rendered="#{beanAgencia.agencia != null}">
+                <h:form id="form-cadastro"> 
+                    <p:growl /> 
+
+                    <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
+
+                        <p:outputLabel value="Nome:" style="margin-left: 50%"/>
+                        <p:inputText value="#{beanAgencia.agencia.nome}" style="width: 80%"
+                                     required="true" requiredMessage="Informe o nome!"/>
+
+                        <p:outputLabel value="Código: " style="margin-left: 50%"/>
+                        <p:inputText value="#{beanAgencia.agencia.codigo}" style="width: 80%"
+                                     required="true" requiredMessage="Informe o codigo!"/>
+
+                    </p:panelGrid>
+
+
+                    <p:commandButton value="Salvar" style="margin-left: 80%; margin-right: 5px; margin-top: 10px"
+                                     styleClass="ui-button-secondary" actionListener="#{beanAgencia.salvar()}"
+                                     update="@form tabela painel"/>
+
+                    <p:commandButton value="Cancelar" actionListener="#{beanAgencia.cancelar()}" styleClass="ui-button-secondary"
+                                     update="painel" immediate="true"/>
+                </h:form>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{beanAgencia.agencia == null}">
+                <h:form id="tabela">
+                    <p:commandButton value="Novo" actionListener="#{beanAgencia.novo()}" 
+                                     styleClass="ui-button-secondary"
+                                     update="painel"/>
+                    <p:dataTable  value="#{beanAgencia.agencias}" style="margin-top: 15px" var="agen"
+                                  reflow="true" scrollable="true" scrollHeight="280">
+
+                        <p:column headerText="Nome:"  sortBy="#{agen.nome}" >
+                            <p:outputLabel value="#{agen.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Código: "  >
+                            <p:outputLabel value="#{agen.codigo}"/>
+                        </p:column>
+
+                    
+                        <p:column headerText="Opções">
+
+                            <p:tooltip position="top" for="@next" value="Editar"/>
+                            <p:commandButton icon="pi pi-file-edit" style="margin-right: 15px; width: 40px"   styleClass="ui-button-secondary" actionListener="#{beanAgencia.editar(agen)}"
+                                             update="form-cadastro painel"/>
+                            <p:tooltip position="top" for="@next" value="Excluir"/>
+                            <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanAgencia.remover(agen)}"
+                                             update="form-cadastro painel">
+
+                                <p:confirm header="Confirmação" message="Deseja remover a disciplina: #{agen.nome}?" icon="pi pi-info-circle"/>
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                            </p:confirmDialog>
+
+
+                        </p:column>
+
+
+
+
+                    </p:dataTable>
+                </h:form>
+            </p:outputPanel>
+        </p:panel>
+    </ui:define>
+</ui:composition>

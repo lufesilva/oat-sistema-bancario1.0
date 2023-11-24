@@ -14,5 +14,7 @@ public class ClienteDao extends GenericDao<Cliente, Long>{
         var resultado = query.getResultList();
         return resultado.isEmpty() ? null : (Cliente) resultado.get(0);
     }
+      
+        
     
 }

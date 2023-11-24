@@ -16,8 +16,8 @@
             <h:form>
                 <p:menubar>
                     <p:menuitem value="Início" icon="pi pifw pi-home" outcome="/pages/gerente/inicio_gerente.jsf" />
-                    <p:menuitem value="Cadastro Cliete" icon="pi pifw pi-th-large" />
-                    <p:menuitem value="Cadastro Agência" icon="pi pifw pi-book" />
+                    <p:menuitem value="Cadastro Cliete" icon="pi pifw pi-th-large"  outcome="/pages/gerente/cadastro_cliente.jsf"  />
+                    <p:menuitem value="Cadastro Agência" icon="pi pifw pi-book" outcome="/pages/gerente/cadastro_agencia.jsf"  />
                     <p:menuitem value="Cadastro Conta" icon="pi pifw pi-database" />
                     <p:menuitem value="Quit" icon="pi pifw pi-power-off" actionListener="#{beanGerente.logout()}" />
                 </p:menubar>
