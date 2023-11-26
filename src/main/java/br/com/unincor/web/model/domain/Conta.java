@@ -35,6 +35,7 @@ public class Conta implements Serializable{
     private Integer numero;
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
+    private Boolean tipoConta;
     private Double limite;
     
     @ManyToOne

@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:define name="titulo"> - Cadastro Cliente</ui:define> 
+    <ui:define name="titulo"> - Cadastro Conta</ui:define> 
 
     <ui:define name="conteudo" >
         <p:panel id="painel" header="Cadastro Conta">
@@ -17,55 +17,84 @@
                     <p:growl /> 
 
                     <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
+                        
+                        <p:outputLabel value="Numero: " style="margin-left: 50%"/>
+                        <p:inputText value="#{beanConta.conta.numero}" style="width: 80%"
+                                     required="true" requiredMessage="Informe o numero!"/>
+                        
 
-                        <p:selectOneMenu value="#{beanConta.value.tipo}">
+                      <p:outputLabel value="Tipo de Conta:  " style="margin-left: 50%"/>
+                      <p:selectOneMenu value="#{beanConta.conta.tipoConta}">
                             <f:selectItem itemLabel="(Selecione)" noSelectionOption="true"/>
-                            <f:selectItems value="#{beanConta.tipos}" var="g"/>
-                        </p:selectOneMenu>
+                            <f:selectItem itemValue="true" itemLabel="Conta Corrente"  />
+                            <f:selectItem itemValue="false" itemLabel="Conta Poupança" />
+                     
+                 
 
-                        <p:outputLabel value="Nome:" style="margin-left: 50%"/>
-                        <p:inputText value="#{beanAgencia.agencia.nome}" style="width: 80%"
-                                     required="true" requiredMessage="Informe o nome!"/>
+                        
 
-                        <p:outputLabel value="Código: " style="margin-left: 50%"/>
-                        <p:inputText value="#{beanAgencia.agencia.codigo}" style="width: 80%"
-                                     required="true" requiredMessage="Informe o codigo!"/>
-
+                       
                     </p:panelGrid>
 
 
                     <p:commandButton value="Salvar" style="margin-left: 80%; margin-right: 5px; margin-top: 10px"
-                                     styleClass="ui-button-secondary" actionListener="#{beanAgencia.salvar()}"
+                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvar()}"
                                      update="@form tabela painel"/>
 
-                    <p:commandButton value="Cancelar" actionListener="#{beanAgencia.cancelar()}" styleClass="ui-button-secondary"
+                    <p:commandButton value="Cancelar" actionListener="#{beanConta.cancelar()}" styleClass="ui-button-secondary"
                                      update="painel" immediate="true"/>
                 </h:form>
+                
+                
+                <p:dialog id="corrente" header="Contas" widgetVar="cadastroContaVar" modal="true"
+                                      resizable="false" dynamic="true"  >
+                    <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
+                        
+                                 
+                      <p:outputLabel  value="Limite" style="margin-left: 50%"/>
+                      <p:inputText value="#{beanConta.conta.limite}" style="width: 80%"
+                                     required="true" requiredMessage="Informe o Limite!"/>
+                    </p:panelGrid>
+
+
+                    
+                </p:dialog>
+                
+                
+                
             </p:outputPanel>
-            <p:outputPanel rendered="#{beanAgencia.agencia == null}">
+            <p:outputPanel rendered="#{beanConta.conta == null}">
                 <h:form id="tabela">
-                    <p:commandButton value="Novo" actionListener="#{beanAgencia.novo()}" 
+                    <p:commandButton value="Novo" actionListener="#{beanConta.novo()}" 
                                      styleClass="ui-button-secondary"
                                      update="painel"/>
-                    <p:dataTable  value="#{beanAgencia.agencias}" style="margin-top: 15px" var="agen"
+                    <p:dataTable  value="#{beanConta.contas}" style="margin-top: 15px" var="con"
                                   reflow="true" scrollable="true" scrollHeight="280">
 
-                        <p:column headerText="Nome:"  sortBy="#{agen.nome}" >
-                            <p:outputLabel value="#{agen.nome}"/>
+                        <p:column headerText="Numero: "  sortBy="#{con.numero}" >
+                            <p:outputLabel value="#{con.numero}"/>
                         </p:column>
 
-                        <p:column headerText="Código: "  >
-                            <p:outputLabel value="#{agen.codigo}"/>
+                        <p:column headerText="Tipo "  >
+                            <p:outputLabel value="#{con.tipo}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Cliente:  "  >
+                            <p:outputLabel value="#{con.cliente}"/>
+                        </p:column>
+                        
+                          <p:column headerText="Agência:  "  >
+                              <p:outputLabel value="#{con.agencia}"/>
                         </p:column>
 
 
                         <p:column headerText="Opções">
 
                             <p:tooltip position="top" for="@next" value="Editar"/>
-                            <p:commandButton icon="pi pi-file-edit" style="margin-right: 15px; width: 40px"   styleClass="ui-button-secondary" actionListener="#{beanAgencia.editar(agen)}"
+                            <p:commandButton icon="pi pi-file-edit" style="margin-right: 15px; width: 40px"   styleClass="ui-button-secondary" actionListener="#{beanConta.editar(con)}"
                                              update="form-cadastro painel"/>
                             <p:tooltip position="top" for="@next" value="Excluir"/>
-                            <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanAgencia.remover(agen)}"
+                            <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanConta.remover(con)}"
                                              update="form-cadastro painel">
 
                                 <p:confirm header="Confirmação" message="Deseja remover a disciplina: #{agen.nome}?" icon="pi pi-info-circle"/>

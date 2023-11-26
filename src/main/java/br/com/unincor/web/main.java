@@ -10,10 +10,10 @@ import br.com.unincor.web.view.utils.Criptografar;
 
 public class main {
     public static void main(String[] args) {
-//    Cliente cliente = new Cliente(null, "Matheus", "matheus@gmail.com", "5555555", Criptografar.encryp("123"), null, null);
-//        ClienteDao clienteDao = new ClienteDao();
-//        
-//        clienteDao.save(cliente);
+    Cliente cliente = new Cliente(null, "Matheus", "matheus@gmail.com", "5555555", Criptografar.encryp("123"), null, null);
+        ClienteDao clienteDao = new ClienteDao();
+        
+        clienteDao.save(cliente);
 
         Gerente g = new Gerente(null, "teste", "teste", "111", Criptografar.encryp("123"), null, null);
         GerenteDao gDao =  new GerenteDao();
