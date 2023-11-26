@@ -1,4 +1,5 @@
 br\com\unincor\web\core\HibernateManager.class
+br\com\unincor\web\controller\BeanAgencia.class
 br\com\unincor\web\controller\AbstractBean.class
 br\com\unincor\web\model\dao\EnderecoDao.class
 br\com\unincor\web\main.class
@@ -7,6 +8,7 @@ br\com\unincor\web\view\utils\Criptografar.class
 br\com\unincor\web\controller\BeanGerente.class
 br\com\unincor\web\model\domain\Gerente.class
 br\com\unincor\web\filters\FiltroRequisicaoGerente.class
+br\com\unincor\web\controller\BeanConta.class
 br\com\unincor\web\model\domain\Endereco.class
 br\com\unincor\web\model\domain\Conta.class
 br\com\unincor\web\model\domain\ContaCorrente.class
@@ -22,6 +24,7 @@ br\com\unincor\web\model\dao\ContaDao.class
 br\com\unincor\web\model\domain\Emprestimo.class
 br\com\unincor\web\model\dao\ContaPoupancaDao.class
 br\com\unincor\web\model\dao\AgenciaDao.class
+br\com\unincor\web\converter\AgenciaConverter.class
 br\com\unincor\web\model\domain\Transferencia.class
 br\com\unincor\web\model\dao\GerenteDao.class
 br\com\unincor\web\controller\BeanCliente.class

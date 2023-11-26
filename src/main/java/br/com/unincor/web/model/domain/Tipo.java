@@ -8,6 +8,6 @@ package br.com.unincor.web.model.domain;
  *
  * @author Luiz
  */
-enum Tipo {
+public enum Tipo {
     CORRENTE, POUPANÇA
 }

@@ -5,6 +5,8 @@ import br.com.unincor.web.model.domain.Gerente;
 import br.com.unincor.web.view.utils.Criptografar;
 import br.com.unincor.web.view.utils.Mensagens;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -23,7 +25,10 @@ import lombok.Setter;
 public class BeanGerente extends AbstractBean<Gerente> {
 
     private String senhaLogin;
+    private String confirmarSenha;
     private String emailLogin;
+    private Gerente gerente;
+    private List<Gerente> gerentes = new ArrayList<>();
 
     public BeanGerente() {
         super(new GerenteDao());
@@ -75,6 +80,26 @@ public class BeanGerente extends AbstractBean<Gerente> {
         } catch (IOException ex) {
             Logger.getLogger(BeanGerente.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @Override
+    public void salvar() {
+        if (!value.getSenha().equals(confirmarSenha)) {
+            Mensagens.erro(FacesContext.getCurrentInstance(), "As senhas informadas não conferem!");
+            return;
+        }
+        var senha = value.getSenha();
+        var senhaCriptografada = Criptografar.encryp(senha);
+        value.setSenha(senhaCriptografada);
+        new GerenteDao().save(value);
+        value = new Gerente();
+        buscar();
+        //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
+    }
+    
+    @Override
+    public void buscar(){
+        this.gerentes = new GerenteDao().findAll();
     }
 
 }

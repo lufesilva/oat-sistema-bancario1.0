@@ -1,6 +1,8 @@
 package br.com.unincor.web.model.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +33,9 @@ public class Conta implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer numero;
+    @Enumerated(EnumType.STRING)
     private Tipo tipo;
+    private Double limite;
     
     @ManyToOne
     @JoinColumn(name = "id_cliente")

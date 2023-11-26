@@ -5,7 +5,9 @@
 package br.com.unincor.web.controller;
 
 import br.com.unincor.web.model.dao.ClienteDao;
+import br.com.unincor.web.model.dao.ContaDao;
 import br.com.unincor.web.model.domain.Cliente;
+import br.com.unincor.web.model.domain.Conta;
 import br.com.unincor.web.view.utils.Criptografar;
 import br.com.unincor.web.view.utils.Mensagens;
 import java.io.IOException;
@@ -35,6 +37,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
     private String senhaLogin;
     private String emailLogin;
     private String confirmarSenha;
+    private List<Conta> contas;
 
     public BeanCliente() {
         super(new ClienteDao());
@@ -136,6 +139,10 @@ public class BeanCliente extends AbstractBean<Cliente> {
         } catch (IOException ex) {
             Logger.getLogger(BeanCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void buscaContaPorCliente(Cliente cliente){
+        this.contas = new ContaDao().buscaContaCliente(cliente);
     }
 
 }
