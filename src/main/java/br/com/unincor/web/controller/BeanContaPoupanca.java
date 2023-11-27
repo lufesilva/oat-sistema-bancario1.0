@@ -4,16 +4,11 @@
  */
 package br.com.unincor.web.controller;
 
-import br.com.unincor.web.model.dao.AgenciaDao;
 import br.com.unincor.web.model.dao.ContaDao;
 import br.com.unincor.web.model.dao.GenericDao;
 import br.com.unincor.web.model.dao.GerenteDao;
-import br.com.unincor.web.model.domain.Agencia;
 import br.com.unincor.web.model.domain.Conta;
-import br.com.unincor.web.model.domain.Gerente;
-import br.com.unincor.web.model.domain.Tipo;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,16 +21,15 @@ import lombok.Setter;
 @ViewScoped
 @Getter
 @Setter
-public class BeanConta extends AbstractBean<Conta> {
-
-   
-    private List<Gerente> gerentes = new ArrayList<>();
-    private List<Conta> contas =new ArrayList<>();
+public class BeanContaPoupanca extends AbstractBean<Conta> {
+    private List<Conta> contas = new ArrayList<>();
     private Conta conta;
 
-    public BeanConta() {
+    public BeanContaPoupanca() {
         super(new ContaDao());
     }
+
+  
 
     @Override
     void init() {
@@ -61,13 +55,4 @@ public class BeanConta extends AbstractBean<Conta> {
         cancelar();
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
     }
-
-    public List<Tipo> getTipos() {
-        return Arrays.asList(Tipo.values());
-    }
-
-    public List<Agencia> getAgencias() {
-        return new AgenciaDao().findAll();
-    }
-
 }
