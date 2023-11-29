@@ -19,10 +19,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "contas_poupanca")
 public class ContaPoupanca extends Conta implements Serializable {
 
-    private Double valor;
-    private String numero;
+    private Double renda;
+    //private String numero;
     
-    @ManyToOne
-    @JoinColumn(name = "id_conta")
-    private Conta conta;
+//    @ManyToOne
+//    @JoinColumn(name = "id_conta")
+//    private Conta conta;
 }

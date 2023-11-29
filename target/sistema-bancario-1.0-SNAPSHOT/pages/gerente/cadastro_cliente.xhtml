@@ -76,7 +76,7 @@
 
                             <p:splitButton icon="pi pi-list" value="Conta" update="" style="margin-right: 15px" styleClass="ui-button-secondary">
 
-                                <p:menuitem value="Corrente"  action="#{beanContaCorrente.criaContaCorrente()}" oncomplete="PF('cadastroContaCorrenteVar').show();" />
+                                <p:menuitem value="Corrente"  action="#{beanConta.contaCorrente}" oncomplete="PF('cadastroContaCorrenteVar').show();" />
                                 <p:menuitem value="Poupança" style="margin-right: 15px; width: 40px"  action="#{beanContaPoupanca.novo()}"
                                             update="" oncomplete="PF('contaPoupanca').show();"/>
 
@@ -93,7 +93,7 @@
                             <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanConta.remover(con)}"
                                              update="form-cadastro painel">
 
-                                <p:confirm header="Confirmação" message="Deseja remover a disciplina: #{agen.nome}?" icon="pi pi-info-circle"/>
+                                <p:confirm header="Confirmação" message="Deseja remover a conta #{agen.nome}?" icon="pi pi-info-circle"/>
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
@@ -104,13 +104,11 @@
 
 
 
-                            <!--2304-->
-
-
-
-
                             <p:dialog id="contaCorrente" header="Contas" widgetVar="cadastroContaCorrenteVar" modal="true"
                                       resizable="false" dynamic="true"  >
+
+
+                                <p:outputPanel rendered="#{beanConta.conta == null}">
 
                                     <p:commandButton  styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
                                                       process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cad').show();" />
@@ -124,8 +122,9 @@
                                         </p:column>
 
                                         <p:column headerText="Limite:">
-                                            <h:outputText value="#{conta.limite}"/>
+                                            <h:outputText value="{conta.contaCorrente}"/>
                                         </p:column>
+
                                         <p:column>
 
                                             <p:commandButton  styleClass="ui-button-secondary" value="Editar" style="width: 100px"
@@ -138,13 +137,45 @@
 
                                     </p:dataTable>
 
+                                </p:outputPanel>
+
+
+
+
+
 
                             </p:dialog>
-                            
-                              <p:dialog id="cad" header="Contas" widgetVar="cad" modal="true"
-                                      resizable="false" dynamic="true"  >
 
-                                  
+
+
+
+                            <p:dialog id="cad" header="Contas" widgetVar="cad" modal="true" style="width: 500px"
+                                      resizable="false" dynamic="true"  >
+                                <p:panelGrid columns="2" columnClasses="ui-g-3, ui-g-8" style="width: 500px">
+
+                                    <p:outputLabel value="Número: " style="margin-left: 50%"/>
+                                    <p:inputText value="#{beanConta.contaCorrente.numero}" style="width: 90%"
+                                                 required="true" requiredMessage="Informe o nome!"/>
+
+                                    <p:outputLabel value="Limite: " style="margin-left: 50%"/>
+                                    <p:inputText value="#{beanConta.contaCorrente.limite}"  style="width: 90%"
+                                                 required="true" requiredMessage="Informe o nome!"/>
+
+                                     <p:outputLabel value="Agência: " style="margin-left: 50%"/>
+                                    <p:selectOneMenu value="#{beanConta.agenciaSelecionada}" converter="agenciaConverter"  style="width: 90%">
+                                        <f:selectItem itemLabel="(Selecione)" noSelectionOption="true" />
+                                        <f:selectItems value="#{beanConta.agencias}" var="agen"
+                                                       itemLabel="#{agen.nome}" itemValue="#{agen}" />
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="Salvar" style="margin-left: 210px;  margin-top: 10px"
+                                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvarContaCorrente(cli)}"
+                                                     update="@form tabela painel" />
+
+
+                                </p:panelGrid>
+
+
                             </p:dialog>
 
 

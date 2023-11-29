@@ -12,6 +12,8 @@ br\com\unincor\web\controller\BeanConta.class
 br\com\unincor\web\model\domain\Endereco.class
 br\com\unincor\web\model\domain\Conta.class
 br\com\unincor\web\model\domain\ContaCorrente.class
+br\com\unincor\web\controller\BeanContaPoupanca.class
+br\com\unincor\web\controller\BeanContaCorrente.class
 br\com\unincor\web\model\dao\ClienteDao.class
 br\com\unincor\web\model\dao\ContaCorrenteDao.class
 br\com\unincor\web\view\utils\Mensagens.class

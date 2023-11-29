@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -34,10 +35,16 @@ public class BeanGerente extends AbstractBean<Gerente> {
         super(new GerenteDao());
     }
 
-    @Override
-    void init() {
-        this.buscar();
+//    @Override
+//    void init() {
+//        this.buscar();
+//    }
+    
+    @PostConstruct 
+    public void init() {
+        buscar();
     }
+
 
     @Override
     public void novo() {

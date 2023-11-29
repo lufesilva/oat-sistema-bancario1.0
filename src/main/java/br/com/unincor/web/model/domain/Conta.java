@@ -35,18 +35,18 @@ public class Conta implements Serializable{
     private Integer numero;
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
-    private Boolean tipoConta;
-    private Double limite;
+    private Boolean enable;
+  //  private Double limite;
     
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
     
-    @OneToMany(mappedBy = "conta")
-    private List<ContaCorrente> contaCorrente;
-    
-    @OneToMany(mappedBy = "conta")
-    private List<ContaPoupanca> contaPoupanca;
+//    @OneToMany(mappedBy = "conta")
+//    private List<ContaCorrente> contaCorrente;
+//    
+//    @OneToMany(mappedBy = "conta")
+//    private List<ContaPoupanca> contaPoupanca;
     
     @ManyToOne
     @JoinColumn(name = "id_agencia")
