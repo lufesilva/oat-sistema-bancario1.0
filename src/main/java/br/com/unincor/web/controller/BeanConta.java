@@ -37,6 +37,9 @@ public class BeanConta extends AbstractBean<Conta> {
     private ContaCorrente contaCorrente;
     private ContaPoupanca contaPoupanca;
     private Agencia agenciaSelecionada;
+    private Integer numero;
+    private Double valor;
+    private Double sa;
 
     public BeanConta() {
         super(new ContaDao());
@@ -44,6 +47,7 @@ public class BeanConta extends AbstractBean<Conta> {
 
     @Override
     void init() {
+        conta = new Conta();
         this.buscar();
         
 
@@ -51,7 +55,7 @@ public class BeanConta extends AbstractBean<Conta> {
 
     @Override
     public void novo() {
-        this.value = new Conta();
+        this.conta = new Conta();
         this.contaCorrente = new ContaCorrente();
         this.contaPoupanca = new ContaPoupanca();
 
@@ -59,11 +63,10 @@ public class BeanConta extends AbstractBean<Conta> {
 
     @Override
     public void salvar() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
-        this.value.setGerente(gerenteLogado);
-        new ContaDao().save(value);
+        buscaContaPorNumero();
+        valor += sa;
+        conta.setSaldo(valor);
+        new ContaDao().save(conta);
         buscar();
         cancelar();
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
@@ -118,6 +121,12 @@ public class BeanConta extends AbstractBean<Conta> {
 
     public List<Agencia> getAgencias() {
         return new AgenciaDao().findAll();
+    }
+    
+    public void buscaContaPorNumero(){
+        conta = new ContaDao().buscaContaPorNumero(numero);
+        sa = conta.getSaldo();
+        System.out.println(sa);
     }
 
 }

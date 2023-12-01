@@ -104,12 +104,12 @@
 
 
                             <p:dialog id="contaCorrente" header="Corrente" widgetVar="cadastroContaCorrenteVar" modal="true"
-                                      resizable="false" dynamic="true"  >
+                                      resizable="false" dynamic="true" >
 
                                 <p:outputPanel rendered="#{beanConta.conta == null}">
 
                                     <p:commandButton   styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
-                                                      process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadCorrente').show();" />
+                                                      process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadCorrente').show();" update="tabela painel" />
 
                                     <p:dataTable style="width: 900px;" value="#{beanConta.contasCorrente}" 
                                                 var="cc"   reflow="true" scrollable="true" scrollHeight="280">

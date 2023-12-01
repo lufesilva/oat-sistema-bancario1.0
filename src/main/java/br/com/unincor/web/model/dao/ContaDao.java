@@ -15,4 +15,13 @@ public class ContaDao extends GenericDao<Conta, Long>{
         return query.getResultList();
 
     }
+
+    public Conta buscaContaPorNumero(Integer numero) {
+        String sql = "from Conta c where c.numero = :numero";
+        
+        Query query = getEntityManager().createQuery(sql, Cliente.class)
+                .setParameter("numero", numero);
+         var resultado = query.getResultList();
+        return resultado.isEmpty() ? null : (Conta) resultado.get(0);
+            }
 }
