@@ -10,6 +10,7 @@ br\com\unincor\web\model\domain\Gerente.class
 br\com\unincor\web\filters\FiltroRequisicaoGerente.class
 br\com\unincor\web\controller\BeanConta.class
 br\com\unincor\web\model\domain\Endereco.class
+br\com\unincor\web\view\utils\AgenciaConverter.class
 br\com\unincor\web\model\domain\Conta.class
 br\com\unincor\web\model\domain\ContaCorrente.class
 br\com\unincor\web\controller\BeanContaPoupanca.class

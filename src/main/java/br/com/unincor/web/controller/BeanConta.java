@@ -3,6 +3,7 @@ package br.com.unincor.web.controller;
 import br.com.unincor.web.model.dao.AgenciaDao;
 import br.com.unincor.web.model.dao.ContaCorrenteDao;
 import br.com.unincor.web.model.dao.ContaDao;
+import br.com.unincor.web.model.dao.ContaPoupancaDao;
 import br.com.unincor.web.model.dao.GenericDao;
 import br.com.unincor.web.model.dao.GerenteDao;
 import br.com.unincor.web.model.domain.Agencia;
@@ -30,8 +31,8 @@ public class BeanConta extends AbstractBean<Conta> {
 
     private List<Gerente> gerentes = new ArrayList<>();
     private List<Conta> contas = new ArrayList<>();
-    private List<Conta> contasCorrente = new ArrayList<>();
-    private List<Conta> contasPoupanca = new ArrayList<>();
+    private List<ContaCorrente> contasCorrente = new ArrayList<>();
+    private List<ContaPoupanca> contasPoupanca = new ArrayList<>();
     private Conta conta;
     private ContaCorrente contaCorrente;
     private ContaPoupanca contaPoupanca;
@@ -44,6 +45,7 @@ public class BeanConta extends AbstractBean<Conta> {
     @Override
     void init() {
         this.buscar();
+        
 
     }
 
@@ -67,17 +69,19 @@ public class BeanConta extends AbstractBean<Conta> {
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
     }
 
-//     public Conta buscarContaCorrente(Cliente cliente) {
-//        this.contasCorrente = new ContaDao().buscaContaCliente(cliente);
-//               return contaCorrente;
-//                
-//    }
-//    
-//       public List<Conta> buscarContaPoupanca(Cliente cliente) {
-//        this.contasPoupanca = new ContaDao().buscaContaCliente(cliente);
-//               return contas;
-//                
-//    }
+     public void buscarContaCorrente(Cliente cliente) {
+        this.contasCorrente = new ContaCorrenteDao().buscaContaCliente(cliente);
+        
+        
+                              
+    }
+    
+       public void buscarContaPoupanca(Cliente cliente) {
+        this.contasPoupanca = new ContaPoupancaDao().buscaContaCliente(cliente);
+        
+              
+                
+    }
     public void salvarContaCorrente(Cliente cliente) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);

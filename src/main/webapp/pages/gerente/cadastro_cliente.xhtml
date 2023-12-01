@@ -60,6 +60,7 @@
 
                     <p:dataTable  value="#{beanCliente.clientes}" style="margin-top: 15px" var="cli"
                                   reflow="true" scrollable="true" scrollHeight="340">
+                        
                         <p:column headerText="Nome:"  sortBy="#{cli.nome}" >
                             <p:outputLabel value="#{cli.nome}"/>
                         </p:column>
@@ -76,8 +77,9 @@
 
                             <p:tooltip position="top" for="@next" value="Configurações"/>
                             <p:splitButton icon="pi pi-list" value="Conta" update="" style="margin-right: 15px" styleClass="ui-button-secondary">
-                                <p:menuitem value="Corrente"  action="#{beanConta.contaCorrente}" oncomplete="PF('cadastroContaCorrenteVar').show();" />
-                                <p:menuitem value="Poupança" style="margin-right: 15px; width: 40px"  action="#{beanConta.contaPoupanca}"
+                                <p:menuitem value="Corrente"  actionListener="#{beanConta.buscarContaCorrente(cli)}" 
+                                            update="" oncomplete="PF('cadastroContaCorrenteVar').show();" />
+                                <p:menuitem value="Poupança" style="margin-right: 15px; width: 40px"   actionListener="#{beanConta.buscarContaPoupanca(cli)}"
                                             update="" oncomplete="PF('cadastroContaPoupancaVar').show();"/>
                             </p:splitButton>
 
@@ -106,26 +108,26 @@
 
                                 <p:outputPanel rendered="#{beanConta.conta == null}">
 
-                                    <p:commandButton  styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
+                                    <p:commandButton   styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
                                                       process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadCorrente').show();" />
 
-                                    <p:dataTable style="width: 900px;" value="#{beanConta.contasCorrente}"  
-                                                 reflow="true" scrollable="true" scrollHeight="280">
+                                    <p:dataTable style="width: 900px;" value="#{beanConta.contasCorrente}" 
+                                                var="cc"   reflow="true" scrollable="true" scrollHeight="280">
 
                                         <p:column styleClass="TexAlRight" headerText="Numero:">
-                                            <h:outputText value="#{beanConta.contaCorrente.numero}"/>
+                                            <h:outputText value="#{cc.numero}"/>
                                         </p:column>
 
                                         <p:column headerText="Agência:">
-                                            <h:outputText value="#{beanConta.contaCorrente.agencia}"/>
+                                            <h:outputText value="#{cc.agencia}"/>
                                         </p:column>
 
                                         <p:column>
-                                            <p:commandButton  styleClass="ui-button-secondary" value="Editar" style="width: 100px"
-                                                              process="@this" actionListener="#{beanConta.editar(conta)}" />
+                                            <p:commandButton  styleClass="ui-button-secondary" value="Editar" style="width: 100px; margin-right: 15px;"
+                                                              process="@this" actionListener="#{beanConta.editar(cc)}" />
 
-                                            <p:commandButton  styleClass="ui-button-secondary" value="Excluir" style="width: 100px"
-                                                              process="@this" actionListener="#{beanConta.remover(conta)}" />
+                                            <p:commandButton  styleClass="ui-button-secondary" value="Excluir" style="width: 100px" 
+                                                              process="@this" actionListener="#{beanConta.remover(cc)}" />
 
                                         </p:column>
 
@@ -151,13 +153,12 @@
                                     <p:inputText value="#{beanConta.contaCorrente.limite}"  style="width: 90%"
                                                  required="true" requiredMessage="Informe o nome!"/>
 
-                                    <p:outputLabel value="Agência: " style="margin-left: 50%"/>
+                                 <p:outputLabel value="Agência: " style="margin-left: 50%"/>
                                     <p:selectOneMenu value="#{beanConta.agenciaSelecionada}" converter="agenciaConverter"  style="width: 90%">
                                         <f:selectItem itemLabel="(Selecione)" noSelectionOption="true" />
                                         <f:selectItems value="#{beanConta.agencias}" var="agen"
                                                        itemLabel="#{agen.nome}" itemValue="#{agen}" />
                                     </p:selectOneMenu>
-
                                     <p:commandButton value="Salvar" style="margin-left: 210px;  margin-top: 10px"
                                                      styleClass="ui-button-secondary" actionListener="#{beanConta.salvarContaCorrente(cli)}"
                                                      update="@form tabela painel" />
@@ -177,23 +178,23 @@
                                     <p:commandButton  styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
                                                       process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadPoupanca').show();" />
 
-                                    <p:dataTable style="width: 900px;" value="#{beanCliente.contas}"  
-                                                 var="conta" reflow="true" scrollable="true" scrollHeight="280">
+                                    <p:dataTable style="width: 900px;" value="#{beanConta.contasPoupanca}"  
+                                                 var="cp" reflow="true" scrollable="true" scrollHeight="280">
 
                                         <p:column styleClass="TexAlRight" headerText="Numero:">
-                                            <h:outputText value="#{conta.numero}"/>
+                                            <h:outputText value="#{cp.numero}"/>
                                         </p:column>
 
                                         <p:column headerText="Limite:">
-                                            <h:outputText value="{conta.contaCorrente}"/>
+                                            <h:outputText value="#{cp.agencia}"/>
                                         </p:column>
 
                                         <p:column>
-                                            <p:commandButton  styleClass="ui-button-secondary" value="Editar" style="width: 100px"
-                                                              process="@this" actionListener="#{beanConta.editar(conta)}" />
+                                            <p:commandButton  styleClass="ui-button-secondary" value="Editar" style="width: 100px; margin-right: 15px;"
+                                                              process="@this" actionListener="#{beanConta.editar(cp)}" />
 
                                             <p:commandButton  styleClass="ui-button-secondary" value="Excluir" style="width: 100px"
-                                                              process="@this" actionListener="#{beanConta.remover(conta)}" />
+                                                              process="@this" actionListener="#{beanConta.remover(cp)}" />
                                         </p:column>
                                     </p:dataTable>
                                 </p:outputPanel>
