@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class BeanContaCorrente extends AbstractBean<Conta>{
       private List<Conta> contas = new ArrayList<>();
-    private Conta conta;
+      private Conta conta;
 
     public BeanContaCorrente() {
         super(new ContaDao());
@@ -48,16 +48,16 @@ public class BeanContaCorrente extends AbstractBean<Conta>{
     
     
 
-    @Override
-    public void salvar() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
-        this.value.setGerente(gerenteLogado);
-
-        new ContaDao().save(value);
-        buscar();
-        cancelar();
-        //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
-    }
+//    @Override
+//    public void salvar() {
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+//        var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
+//        this.value.setGerente(gerenteLogado);
+//
+//        new ContaDao().save(value);
+//        buscar();
+//        cancelar();
+//        //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
+//    }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.unincor.web.controller;
 
 import br.com.unincor.web.model.dao.ClienteDao;
@@ -49,6 +45,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
 //    }
     @PostConstruct
     public void init() {
+        //this.cliente = new Cliente();
         buscar();
     }
 
@@ -61,34 +58,23 @@ public class BeanCliente extends AbstractBean<Cliente> {
         clientes = new ClienteDao().findAll();
     }
 
-//    @Override
-//    public void editar(Cliente value) {
-//        super.editar(value); 
-//    }
-//
-//    @Override
-//    public void remover(Cliente value) {
-//        this.value = cliente;
-//        super.remover(value); 
-//    }
-//    
-    
+
     public void editar(Cliente cliente) {
+   
         this.cliente = cliente;
-        this.cliente = new ClienteDao().findById(cliente.getId());
     }
-    
-     public void cancelar() {
+
+    public void cancelar() {
         cliente = null;
     }
-    
-       public void remover(Cliente cliente) {
+
+    public void remover(Cliente cliente) {
 
         new ClienteDao().delete(cliente.getId());
         buscar();
 
     }
-    
+
     public void salvar() {
         if (!cliente.getSenha().equals(confirmarSenha)) {
             Mensagens.erro(FacesContext.getCurrentInstance(), "As senhas informadas não conferem!");
@@ -140,8 +126,8 @@ public class BeanCliente extends AbstractBean<Cliente> {
             Logger.getLogger(BeanCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void buscaContaPorCliente(Cliente cliente){
+
+    public void buscaContaPorCliente(Cliente cliente) {
         this.contas = new ContaDao().buscaContaCliente(cliente);
     }
 

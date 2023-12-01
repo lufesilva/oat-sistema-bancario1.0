@@ -49,4 +49,9 @@ public class BeanAgencia extends AbstractBean<Agencia> {
 
     }
 
+    public void editar(Agencia agencia) {
+
+        this.agencia = agencia;
+    }
+
 }

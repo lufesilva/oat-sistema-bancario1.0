@@ -35,11 +35,10 @@
                         <p:password id="pwd1" value="#{beanCliente.cliente.senha}"  required="true"
                                     toggleMask="true" requiredMessage="Informe uma senha!" />
 
-                        <p:outputLabel styleClass="col-fixed" style="margin-left: 50%" value="Senha: "/>
+                        <p:outputLabel styleClass="col-fixed" style="margin-left: 50%" value="Confirme: "/>
                         <p:password id="pwd2" value="#{beanCliente.confirmarSenha}"  required="true"
                                     toggleMask="true" requiredMessage="Confirme a senha informada!"/>
                     </p:panelGrid>
-
 
                     <p:commandButton value="Salvar" style="margin-left: 80%; margin-right: 5px; margin-top: 10px"
                                      styleClass="ui-button-secondary" actionListener="#{beanCliente.salvar()}"
@@ -49,14 +48,18 @@
                                      update="painel" immediate="true"/>
                 </h:form>
             </p:outputPanel>
+
+
+
             <p:outputPanel rendered="#{beanCliente.cliente == null}">
                 <h:form id="tabela">
+
                     <p:commandButton value="Novo" actionListener="#{beanCliente.novo()}" 
                                      styleClass="ui-button-secondary"
                                      update="painel"/>
+
                     <p:dataTable  value="#{beanCliente.clientes}" style="margin-top: 15px" var="cli"
                                   reflow="true" scrollable="true" scrollHeight="340">
-
                         <p:column headerText="Nome:"  sortBy="#{cli.nome}" >
                             <p:outputLabel value="#{cli.nome}"/>
                         </p:column>
@@ -69,31 +72,25 @@
                             <p:outputLabel value="#{cli.email}"/>
                         </p:column>
 
-
                         <p:column headerText="Opções">
 
                             <p:tooltip position="top" for="@next" value="Configurações"/>
-
                             <p:splitButton icon="pi pi-list" value="Conta" update="" style="margin-right: 15px" styleClass="ui-button-secondary">
-
                                 <p:menuitem value="Corrente"  action="#{beanConta.contaCorrente}" oncomplete="PF('cadastroContaCorrenteVar').show();" />
-                                <p:menuitem value="Poupança" style="margin-right: 15px; width: 40px"  action="#{beanContaPoupanca.novo()}"
-                                            update="" oncomplete="PF('contaPoupanca').show();"/>
-
-
-
-
-                                <!-- Se o confirm dialog não tiver funcionando colocar ele fora do split button -->
+                                <p:menuitem value="Poupança" style="margin-right: 15px; width: 40px"  action="#{beanConta.contaPoupanca}"
+                                            update="" oncomplete="PF('cadastroContaPoupancaVar').show();"/>
                             </p:splitButton>
 
+
                             <p:tooltip position="top" for="@next" value="Editar"/>
-                            <p:commandButton icon="pi pi-file-edit" style="margin-right: 15px; width: 40px"   styleClass="ui-button-secondary" actionListener="#{beanConta.editar(con)}"
+                            <p:commandButton icon="pi pi-file-edit" style="margin-right: 15px; width: 40px"   styleClass="ui-button-secondary" actionListener="#{beanCliente.editar(cli)}"
                                              update="form-cadastro painel"/>
+
                             <p:tooltip position="top" for="@next" value="Excluir"/>
-                            <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanConta.remover(con)}"
+                            <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanCliente.remover(cli)}"
                                              update="form-cadastro painel">
 
-                                <p:confirm header="Confirmação" message="Deseja remover a conta #{agen.nome}?" icon="pi pi-info-circle"/>
+                                <p:confirm header="Confirmação" message="Deseja remover o cliente #{cli.nome}?" icon="pi pi-info-circle"/>
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
@@ -104,15 +101,81 @@
 
 
 
-                            <p:dialog id="contaCorrente" header="Contas" widgetVar="cadastroContaCorrenteVar" modal="true"
+                            <p:dialog id="contaCorrente" header="Corrente" widgetVar="cadastroContaCorrenteVar" modal="true"
                                       resizable="false" dynamic="true"  >
-
 
                                 <p:outputPanel rendered="#{beanConta.conta == null}">
 
                                     <p:commandButton  styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
-                                                      process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cad').show();" />
+                                                      process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadCorrente').show();" />
 
+                                    <p:dataTable style="width: 900px;" value="#{beanConta.contasCorrente}"  
+                                                 reflow="true" scrollable="true" scrollHeight="280">
+
+                                        <p:column styleClass="TexAlRight" headerText="Numero:">
+                                            <h:outputText value="#{beanConta.contaCorrente.numero}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Agência:">
+                                            <h:outputText value="#{beanConta.contaCorrente.agencia}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <p:commandButton  styleClass="ui-button-secondary" value="Editar" style="width: 100px"
+                                                              process="@this" actionListener="#{beanConta.editar(conta)}" />
+
+                                            <p:commandButton  styleClass="ui-button-secondary" value="Excluir" style="width: 100px"
+                                                              process="@this" actionListener="#{beanConta.remover(conta)}" />
+
+                                        </p:column>
+
+                                    </p:dataTable>
+
+                                </p:outputPanel>
+
+                            </p:dialog>
+
+
+
+
+                            <p:dialog id="cadCorretne" header="Corrente" widgetVar="cadCorrente" modal="true" style="width: 500px"
+                                      resizable="false" dynamic="true"  >
+
+                                <p:panelGrid columns="2" columnClasses="ui-g-3, ui-g-8" style="width: 500px">
+
+                                    <p:outputLabel value="Número: " style="margin-left: 50%"/>
+                                    <p:inputText value="#{beanConta.contaCorrente.numero}" style="width: 90%"
+                                                 required="true" requiredMessage="Informe o nome!"/>
+
+                                    <p:outputLabel value="Limite: " style="margin-left: 50%"/>
+                                    <p:inputText value="#{beanConta.contaCorrente.limite}"  style="width: 90%"
+                                                 required="true" requiredMessage="Informe o nome!"/>
+
+                                    <p:outputLabel value="Agência: " style="margin-left: 50%"/>
+                                    <p:selectOneMenu value="#{beanConta.agenciaSelecionada}" converter="agenciaConverter"  style="width: 90%">
+                                        <f:selectItem itemLabel="(Selecione)" noSelectionOption="true" />
+                                        <f:selectItems value="#{beanConta.agencias}" var="agen"
+                                                       itemLabel="#{agen.nome}" itemValue="#{agen}" />
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="Salvar" style="margin-left: 210px;  margin-top: 10px"
+                                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvarContaCorrente(cli)}"
+                                                     update="@form tabela painel" />
+
+                                </p:panelGrid>
+                            </p:dialog>
+
+
+
+
+
+                            <p:dialog id="contaPoupanca" header="Poupança" widgetVar="cadastroContaPoupancaVar" modal="true"
+                                      resizable="false" dynamic="true"  >
+
+                                <p:outputPanel rendered="#{beanConta.conta == null}">
+
+                                    <p:commandButton  styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
+                                                      process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadPoupanca').show();" />
 
                                     <p:dataTable style="width: 900px;" value="#{beanCliente.contas}"  
                                                  var="conta" reflow="true" scrollable="true" scrollHeight="280">
@@ -126,42 +189,29 @@
                                         </p:column>
 
                                         <p:column>
-
                                             <p:commandButton  styleClass="ui-button-secondary" value="Editar" style="width: 100px"
                                                               process="@this" actionListener="#{beanConta.editar(conta)}" />
+
                                             <p:commandButton  styleClass="ui-button-secondary" value="Excluir" style="width: 100px"
                                                               process="@this" actionListener="#{beanConta.remover(conta)}" />
-
-
                                         </p:column>
-
                                     </p:dataTable>
-
                                 </p:outputPanel>
-
-
-
-
-
-
                             </p:dialog>
 
 
 
 
-                            <p:dialog id="cad" header="Contas" widgetVar="cad" modal="true" style="width: 500px"
+                            <p:dialog id="cadPoupanca" header="Poupança" widgetVar="cadPoupanca" modal="true" style="width: 500px"
                                       resizable="false" dynamic="true"  >
+
                                 <p:panelGrid columns="2" columnClasses="ui-g-3, ui-g-8" style="width: 500px">
 
                                     <p:outputLabel value="Número: " style="margin-left: 50%"/>
-                                    <p:inputText value="#{beanConta.contaCorrente.numero}" style="width: 90%"
+                                    <p:inputText value="#{beanConta.contaPoupanca.numero}" style="width: 90%"
                                                  required="true" requiredMessage="Informe o nome!"/>
 
-                                    <p:outputLabel value="Limite: " style="margin-left: 50%"/>
-                                    <p:inputText value="#{beanConta.contaCorrente.limite}"  style="width: 90%"
-                                                 required="true" requiredMessage="Informe o nome!"/>
-
-                                     <p:outputLabel value="Agência: " style="margin-left: 50%"/>
+                                    <p:outputLabel value="Agência: " style="margin-left: 50%"/>
                                     <p:selectOneMenu value="#{beanConta.agenciaSelecionada}" converter="agenciaConverter"  style="width: 90%">
                                         <f:selectItem itemLabel="(Selecione)" noSelectionOption="true" />
                                         <f:selectItems value="#{beanConta.agencias}" var="agen"
@@ -169,24 +219,17 @@
                                     </p:selectOneMenu>
 
                                     <p:commandButton value="Salvar" style="margin-left: 210px;  margin-top: 10px"
-                                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvarContaCorrente(cli)}"
+                                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvarContaPoupanca(cli)}"
                                                      update="@form tabela painel" />
 
 
                                 </p:panelGrid>
-
-
                             </p:dialog>
 
-
-
                         </p:column>
-
                     </p:dataTable>
                 </h:form>
             </p:outputPanel>
-
-
         </p:panel>
     </ui:define>
 </ui:composition>

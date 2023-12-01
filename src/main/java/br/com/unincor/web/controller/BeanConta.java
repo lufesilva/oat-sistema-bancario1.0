@@ -9,6 +9,7 @@ import br.com.unincor.web.model.domain.Agencia;
 import br.com.unincor.web.model.domain.Cliente;
 import br.com.unincor.web.model.domain.Conta;
 import br.com.unincor.web.model.domain.ContaCorrente;
+import br.com.unincor.web.model.domain.ContaPoupanca;
 import br.com.unincor.web.model.domain.Gerente;
 import br.com.unincor.web.model.domain.Tipo;
 import java.util.ArrayList;
@@ -27,11 +28,13 @@ import lombok.Setter;
 @Setter
 public class BeanConta extends AbstractBean<Conta> {
 
-   
     private List<Gerente> gerentes = new ArrayList<>();
-    private List<Conta> contas =new ArrayList<>();
+    private List<Conta> contas = new ArrayList<>();
+    private List<Conta> contasCorrente = new ArrayList<>();
+    private List<Conta> contasPoupanca = new ArrayList<>();
     private Conta conta;
     private ContaCorrente contaCorrente;
+    private ContaPoupanca contaPoupanca;
     private Agencia agenciaSelecionada;
 
     public BeanConta() {
@@ -47,7 +50,8 @@ public class BeanConta extends AbstractBean<Conta> {
     @Override
     public void novo() {
         this.value = new Conta();
-        this.contaCorrente =  new ContaCorrente();
+        this.contaCorrente = new ContaCorrente();
+        this.contaPoupanca = new ContaPoupanca();
 
     }
 
@@ -57,32 +61,52 @@ public class BeanConta extends AbstractBean<Conta> {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
         this.value.setGerente(gerenteLogado);
-
         new ContaDao().save(value);
         buscar();
         cancelar();
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
     }
-    
-     public void salvarContaCorrente(Cliente cliente) {
+
+//     public Conta buscarContaCorrente(Cliente cliente) {
+//        this.contasCorrente = new ContaDao().buscaContaCliente(cliente);
+//               return contaCorrente;
+//                
+//    }
+//    
+//       public List<Conta> buscarContaPoupanca(Cliente cliente) {
+//        this.contasPoupanca = new ContaDao().buscaContaCliente(cliente);
+//               return contas;
+//                
+//    }
+    public void salvarContaCorrente(Cliente cliente) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
-       
         contaCorrente.setAgencia(agenciaSelecionada);
         contaCorrente.setEnable(Boolean.TRUE);
         contaCorrente.setCliente(cliente);
         contaCorrente.setGerente(gerenteLogado);
         contaCorrente.setTipo(Tipo.CORRENTE);
-
         new ContaDao().save(contaCorrente);
         buscar();
         cancelar();
-        //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
+
     }
 
-    
-    
+    public void salvarContaPoupanca(Cliente cliente) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
+        contaPoupanca.setAgencia(agenciaSelecionada);
+        contaPoupanca.setEnable(Boolean.TRUE);
+        contaPoupanca.setCliente(cliente);
+        contaPoupanca.setGerente(gerenteLogado);
+        contaPoupanca.setTipo(Tipo.POUPANCA);
+        new ContaDao().save(contaPoupanca);
+        buscar();
+        cancelar();
+
+    }
 
     public List<Tipo> getTipos() {
         return Arrays.asList(Tipo.values());
