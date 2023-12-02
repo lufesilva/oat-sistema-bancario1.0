@@ -59,7 +59,7 @@
                                      update="painel"/>
 
                     <p:dataTable  value="#{beanCliente.clientes}" style="margin-top: 15px" var="cli"
-                                  reflow="true" scrollable="true" scrollHeight="340">
+                                  reflow="true" scrollable="true" scrollHeight="340" >
                         
                         <p:column headerText="Nome:"  sortBy="#{cli.nome}" >
                             <p:outputLabel value="#{cli.nome}"/>
@@ -78,9 +78,9 @@
                             <p:tooltip position="top" for="@next" value="Configurações"/>
                             <p:splitButton icon="pi pi-list" value="Conta" update="" style="margin-right: 15px" styleClass="ui-button-secondary">
                                 <p:menuitem value="Corrente"  actionListener="#{beanConta.buscarContaCorrente(cli)}" 
-                                            update="" oncomplete="PF('cadastroContaCorrenteVar').show();" />
+                                            update="tabela" oncomplete="PF('cadastroContaCorrenteVar').show();" />
                                 <p:menuitem value="Poupança" style="margin-right: 15px; width: 40px"   actionListener="#{beanConta.buscarContaPoupanca(cli)}"
-                                            update="" oncomplete="PF('cadastroContaPoupancaVar').show();"/>
+                                            update="tabela" oncomplete="PF('cadastroContaPoupancaVar').show();"/>
                             </p:splitButton>
 
 
@@ -109,17 +109,21 @@
                                 <p:outputPanel rendered="#{beanConta.conta == null}">
 
                                     <p:commandButton   styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
-                                                      process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadCorrente').show();" update="tabela painel" />
+                                                       process="@this"  actionListener="#{beanConta.novo()}" disabled="#{not empty beanConta.contasCorrente}"
+                                                      oncomplete="PF('cadCorrente').show();" update="tabela painel" />
 
-                                    <p:dataTable style="width: 900px;" value="#{beanConta.contasCorrente}" 
-                                                var="cc"   reflow="true" scrollable="true" scrollHeight="280">
+                                    <p:dataTable style="width: 1000px;" value="#{beanConta.contasCorrente}" 
+                                                var="cc" reflow="true" scrollable="true" scrollHeight="280">
 
                                         <p:column styleClass="TexAlRight" headerText="Numero:">
                                             <h:outputText value="#{cc.numero}"/>
                                         </p:column>
 
                                         <p:column headerText="Agência:">
-                                            <h:outputText value="#{cc.agencia}"/>
+                                            <h:outputText value="#{cc.agencia.nome}"/>
+                                        </p:column>
+                                          <p:column headerText="Limite">
+                                            <h:outputText value="#{cc.limite}"/>
                                         </p:column>
 
                                         <p:column>
@@ -161,7 +165,7 @@
                                     </p:selectOneMenu>
                                     <p:commandButton value="Salvar" style="margin-left: 210px;  margin-top: 10px"
                                                      styleClass="ui-button-secondary" actionListener="#{beanConta.salvarContaCorrente(cli)}"
-                                                     update="@form tabela painel" />
+                                                     update="@form tabela painel"  />
 
                                 </p:panelGrid>
                             </p:dialog>
@@ -176,7 +180,8 @@
                                 <p:outputPanel rendered="#{beanConta.conta == null}">
 
                                     <p:commandButton  styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
-                                                      process="@this"  actionListener="#{beanConta.novo()}" oncomplete="PF('cadPoupanca').show();" />
+                                                      process="@this"  actionListener="#{beanConta.novo()}" disabled="#{not empty beanConta.contasPoupanca}"
+                                                      oncomplete="PF('cadPoupanca').show();" />
 
                                     <p:dataTable style="width: 900px;" value="#{beanConta.contasPoupanca}"  
                                                  var="cp" reflow="true" scrollable="true" scrollHeight="280">
@@ -185,8 +190,8 @@
                                             <h:outputText value="#{cp.numero}"/>
                                         </p:column>
 
-                                        <p:column headerText="Limite:">
-                                            <h:outputText value="#{cp.agencia}"/>
+                                        <p:column headerText="Agência">
+                                            <h:outputText value="#{cp.agencia.nome}"/>
                                         </p:column>
 
                                         <p:column>

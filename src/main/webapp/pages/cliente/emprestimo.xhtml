@@ -18,15 +18,15 @@
                                    process="@this"  actionListener="#{BeanEmprestimo.novo()}" oncomplete="PF('cadEmprestimoVar').show();" />
 
 
-                <p:dataTable var="customer" value="#{dtRowGroupView.customers}" sortBy="#{customer.representative.name}">
+                <p:dataTable var="customer" value="#{beanEmprestimo.emprestimos}" >
                     <p:headerRow field="representative.name"
                                  expandable="true"
-                                 expanded="#{customer.representative.name != 'Stephen Shaw'}">
+                                 expanded="#{beanEmprestimo.emprestimo.quantidadeParcelas != null}">
 
                         <p:column colspan="6">
                             <div class="inline-flex align-items-center" style="vertical-align: middle">
-                                <p:graphicImage name="images/avatar/#{customer.representative.image}" library="demo" width="32" style="vertical-align: middle"/>
-                                <h:outputText styleClass="ml-2" value="#{customer.representative.name}"/>
+                                <!--<p:graphicImage name="images/avatar/{customer.representative.image}" library="demo" width="32" style="vertical-align: middle"/>-->
+                                <h:outputText styleClass="ml-2" value="#{beanEmprestimo.emprestimo.id}"/>
                             </div>
                         </p:column>
                     </p:headerRow>

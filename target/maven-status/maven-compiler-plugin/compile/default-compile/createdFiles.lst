@@ -8,6 +8,7 @@ br\com\unincor\web\view\utils\Criptografar.class
 br\com\unincor\web\controller\BeanGerente.class
 br\com\unincor\web\model\domain\Gerente.class
 br\com\unincor\web\filters\FiltroRequisicaoGerente.class
+.netbeans_automatic_build
 br\com\unincor\web\controller\BeanConta.class
 br\com\unincor\web\model\domain\Endereco.class
 br\com\unincor\web\view\utils\AgenciaConverter.class
@@ -33,4 +34,5 @@ br\com\unincor\web\model\dao\GerenteDao.class
 br\com\unincor\web\controller\BeanCliente.class
 br\com\unincor\web\model\dao\EmprestimoDao.class
 br\com\unincor\web\model\domain\Cliente.class
+br\com\unincor\web\controller\BeanEmprestimo.class
 br\com\unincor\web\model\domain\Logradouro.class
