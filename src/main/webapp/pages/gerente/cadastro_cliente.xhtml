@@ -154,7 +154,7 @@
                                                  required="true" requiredMessage="Informe o nome!"/>
 
                                  <p:outputLabel value="Agência: " style="margin-left: 50%"/>
-                                    <p:selectOneMenu value="#{beanConta.agenciaSelecionada}" converter="agenciaConverter"  style="width: 90%">
+                                 <p:selectOneMenu value="#{beanConta.agenciaSelecionada}" converter="agenciaConverter"  style="width: 90%">
                                         <f:selectItem itemLabel="(Selecione)" noSelectionOption="true" />
                                         <f:selectItems value="#{beanConta.agencias}" var="agen"
                                                        itemLabel="#{agen.nome}" itemValue="#{agen}" />

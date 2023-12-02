@@ -34,6 +34,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
     private String emailLogin;
     private String confirmarSenha;
     private List<Conta> contas;
+    private Cliente clienteTemplate;
 
     public BeanCliente() {
         super(new ClienteDao());
@@ -58,9 +59,8 @@ public class BeanCliente extends AbstractBean<Cliente> {
         clientes = new ClienteDao().findAll();
     }
 
-
     public void editar(Cliente cliente) {
-   
+
         this.cliente = cliente;
     }
 
@@ -103,6 +103,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         session.setAttribute("clienteId", clienteLogado.getId());
+        clienteTemplate = clienteLogado;
 
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
