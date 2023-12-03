@@ -29,7 +29,8 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
         super(new EmprestimoDao());
     }
 
-    @PostConstruct
+
+    @Override
     void init() {
         novo();
         this.buscar();

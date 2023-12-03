@@ -18,15 +18,15 @@
                                    process="@this"  actionListener="#{beanEmprestimo.novo()}" oncomplete="PF('cadEmprestimoVar').show();" />
 
 
-                <p:dataTable var="customer" value="#{beanEmprestimo.emprestimos}" >
+                <p:dataTable var="emprestimo" value="#{beanEmprestimo.values}" >
                     <p:headerRow field="representative.name"
                                  expandable="true"
-                                 expanded="#{beanEmprestimo.emprestimo.quantidadeParcelas != null}">
+                                 expanded="#{beanEmprestimo.value.quantidadeParcelas != null}">
 
                         <p:column colspan="6">
                             <div class="inline-flex align-items-center" style="vertical-align: middle">
                                 <!--<p:graphicImage name="images/avatar/{customer.representative.image}" library="demo" width="32" style="vertical-align: middle"/>-->
-                                <h:outputText styleClass="ml-2" value="#{beanEmprestimo.emprestimo.id}"/>
+                                <h:outputText styleClass="ml-2" value="#{beanEmprestimo.value.id}"/>
                             </div>
                         </p:column>
                     </p:headerRow>
@@ -34,26 +34,17 @@
                     
 
                     <p:column headerText="Vencimento">
-                        <h:outputText value="#{beanEmprestimo.emprestimo}">
+                        <h:outputText value="#{beanEmprestimo.value.dataFinal}">
                             <f:convertDateTime pattern="MM/dd/yyyy" type="localDate"/>
                         </h:outputText>
                     </p:column>
 
                     <p:column headerText="Status">
-                        <span class="customer-badge status-#{beanEmprestimo.emprestimo.status.toLowerCase()}">#{beanEmprestimo.emprestimo}</span>
+                        <span class="customer-badge status-#{beanEmprestimo.value.status}">#{beanEmprestimo.value.status}</span>
                     </p:column>
                     <p:column headerText="Opções">
-                        <p:commandButton value="Pagar" />
+                        <p:commandButton value="Pagar" actionListener="#{beanEmprestimo.pagar(emprestimo)}" />
                     </p:column>
-
-                    <p:summaryRow>
-                        <p:column colspan="5" style="text-align:right">
-                            <h:outputText value="Total Deparcelas"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{dtRowGroupView.getTotalCount(customer.representative.name)}"/>
-                        </p:column>
-                    </p:summaryRow>
                 </p:dataTable>
 
 
