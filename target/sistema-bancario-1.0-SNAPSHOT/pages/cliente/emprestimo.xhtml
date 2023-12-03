@@ -7,46 +7,77 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:define name="titulo"> - Depósito</ui:define> 
+    <ui:define name="titulo"> - Empréstimos</ui:define> 
 
     <ui:define name="conteudo" >
         <p:panel id="painel" header="Empréstimos" >
             <h:form id="form-cadastro">
 
 
-                <p:commandButton   styleClass="ui-button-secondary" value="Novo Empréstimo" style=" width: 200px"
+                
+
+                <p:outputPanel rendered="#{beanEmprestimo.emprestimo != null}">
+             
+                   <p:commandButton   styleClass="ui-button-secondary" value="Novo Empréstimo" style=" width: 200px"
                                    process="@this"  actionListener="#{beanEmprestimo.novo()}" oncomplete="PF('cadEmprestimoVar').show();" />
 
+                    <p:dataTable  value="#{beanEmprestimo.emprestimos}" style="margin-top: 15px" var="emp"
+                                  reflow="true" scrollable="true" scrollHeight="280">
 
-                <p:dataTable var="emprestimo" value="#{beanEmprestimo.values}" >
-                    <p:headerRow field="representative.name"
-                                 expandable="true"
-                                 expanded="#{beanEmprestimo.value.quantidadeParcelas != null}">
-
-                        <p:column colspan="6">
-                            <div class="inline-flex align-items-center" style="vertical-align: middle">
-                                <!--<p:graphicImage name="images/avatar/{customer.representative.image}" library="demo" width="32" style="vertical-align: middle"/>-->
-                                <h:outputText styleClass="ml-2" value="#{beanEmprestimo.value.id}"/>
-                            </div>
+                        <p:column headerText="Parcela"  sortBy="#{emp.parcela}" >
+                            <p:outputLabel value="#{emp.parcela}"/>
                         </p:column>
-                    </p:headerRow>
 
-                    
+                        <p:column headerText="Data Final: "  >
+                            <p:outputLabel value="#{emp.dataFinal}"/>
+                        </p:column>
 
-                    <p:column headerText="Vencimento">
-                        <h:outputText value="#{beanEmprestimo.value.dataFinal}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" type="localDate"/>
-                        </h:outputText>
-                    </p:column>
+                        <p:column headerText="Status: "  sortBy="#{emp.status}"  >
+                         <p:outputLabel value="#{emp.status}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Opções">
 
-                    <p:column headerText="Status">
-                        <span class="customer-badge status-#{beanEmprestimo.value.status}">#{beanEmprestimo.value.status}</span>
-                    </p:column>
-                    <p:column headerText="Opções">
-                        <p:commandButton value="Pagar" actionListener="#{beanEmprestimo.pagar(emprestimo)}" />
-                    </p:column>
-                </p:dataTable>
+                         
+                            <p:commandButton value="Pagar" style="margin-right: 15px; width: 100px"   styleClass="ui-button-secondary"
+                                             actionListener="#{beanEmprestimo.pagarParcela(emp)}" process="@this" 
+                                             update="form-cadastro painel"/>
+                            
 
+
+                        </p:column>
+
+
+
+
+                    </p:dataTable>
+         
+            </p:outputPanel>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
                 <p:dialog id="cadEmprestimo" header="Novo Empréstimo" widgetVar="cadEmprestimoVar" modal="true"
                           resizable="false" dynamic="true"   >

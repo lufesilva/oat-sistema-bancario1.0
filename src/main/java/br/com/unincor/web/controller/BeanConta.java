@@ -1,6 +1,7 @@
 package br.com.unincor.web.controller;
 
 import br.com.unincor.web.model.dao.AgenciaDao;
+import br.com.unincor.web.model.dao.ClienteDao;
 import br.com.unincor.web.model.dao.ContaCorrenteDao;
 import br.com.unincor.web.model.dao.ContaDao;
 import br.com.unincor.web.model.dao.ContaPoupancaDao;
@@ -15,6 +16,7 @@ import br.com.unincor.web.model.domain.Tipo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -39,12 +41,13 @@ public class BeanConta extends AbstractBean<Conta> {
     private Integer numero;
     private Double valor;
     private Double sa;
+    private Conta contaDestino;
 
     public BeanConta() {
         super(new ContaDao());
     }
 
-    @Override
+    @PostConstruct
     void init() {
         conta = new Conta();
         this.buscar();
@@ -61,13 +64,61 @@ public class BeanConta extends AbstractBean<Conta> {
 
     @Override
     public void salvar() {
-        buscaContaPorNumero();
+        buscaContaComNumero();
         valor += sa;
         conta.setSaldo(valor);
         new ContaDao().save(conta);
         buscar();
         cancelar();
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
+    }
+
+//    @Override
+//    public void salvar() {
+//        buscaContaPorNumero();
+//
+//        valor += sa;
+//        contaDestino.setSaldo(valor);
+//        conta.setSaldo(conta.getSaldo() - valor);
+//        new ContaDao().save(conta);
+//        buscar();
+//        cancelar();
+//
+//    }
+    public void salvarTransContaPoupanca() {
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        var clienteLogado = new ClienteDao().findById((Long) session.getAttribute("clienteId"));
+
+        var conta = new ContaDao().buscaContaPoupancaPorCliente(clienteLogado);
+        buscaContaPorNumero();
+
+        valor += sa;
+        contaDestino.setSaldo(valor);
+        conta.setSaldo(conta.getSaldo() - valor);
+        new ContaDao().save(conta);
+        buscar();
+        cancelar();
+
+    }
+
+    public void salvarTransContaCorrente() {
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        var clienteLogado = new ClienteDao().findById((Long) session.getAttribute("clienteId"));
+
+        var conta = new ContaDao().buscaContaCorrentePorCliente(clienteLogado);
+        buscaContaPorNumero();
+
+        valor += sa;
+        contaDestino.setSaldo(valor);
+        conta.setSaldo(conta.getSaldo() - valor);
+        new ContaDao().save(conta);
+        buscar();
+        cancelar();
+
     }
 
     public void buscarContaCorrente(Cliente cliente) {
@@ -88,6 +139,7 @@ public class BeanConta extends AbstractBean<Conta> {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
             var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
+            contaCorrente.setSaldo(0.0);
             contaCorrente.setAgencia(agenciaSelecionada);
             contaCorrente.setEnable(Boolean.TRUE);
             contaCorrente.setCliente(cliente);
@@ -108,6 +160,7 @@ public class BeanConta extends AbstractBean<Conta> {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
             var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
+            contaPoupanca.setSaldo(0.0);
             contaPoupanca.setAgencia(agenciaSelecionada);
             contaPoupanca.setEnable(Boolean.TRUE);
             contaPoupanca.setCliente(cliente);
@@ -129,9 +182,14 @@ public class BeanConta extends AbstractBean<Conta> {
     }
 
     public void buscaContaPorNumero() {
+        contaDestino = new ContaDao().buscaContaPorNumero(numero);
+        sa = contaDestino.getSaldo();
+        System.out.println(sa);
+    }
+
+    public void buscaContaComNumero() {
         conta = new ContaDao().buscaContaPorNumero(numero);
         sa = conta.getSaldo();
         System.out.println(sa);
     }
-
 }

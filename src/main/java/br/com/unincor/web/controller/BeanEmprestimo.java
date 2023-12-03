@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.component.message.Message;
 
 @ManagedBean
 @ViewScoped
@@ -29,16 +30,27 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
         super(new EmprestimoDao());
     }
 
-
-    @Override
+    @PostConstruct
     void init() {
         novo();
-        this.buscar();
+//        this.buscar();
+        buscarEmprestimos();
+
     }
 
     @Override
     public void novo() {
         this.emprestimo = new Emprestimo();
+    }
+
+    public void buscarEmprestimos() {
+         FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        var clienteLogado = new ClienteDao().findById((Long) session.getAttribute("clienteId"));
+
+        var conta = new ContaDao().buscaContaCorrentePorCliente(clienteLogado);
+
+        this.emprestimos = new ContaDao().buscaEmprestimo(conta);
     }
 
     @Override
@@ -67,6 +79,7 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
                     emprestimo.setDataFinal(emprestimo.getDataFinal().plusMonths(i));
                 }
 
+                emprestimo.setConta(conta);
                 emprestimo.setParcela(i);
                 emprestimo.setStatus(Status.Pendente);
                 new EmprestimoDao().save(emprestimo);
@@ -92,25 +105,23 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
             return false;
         }
     }
-    
-    public void pagar(Emprestimo emprestimo){
+
+    public void pagarParcela(Emprestimo emprestimo) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         var clienteLogado = new ClienteDao().findById((Long) session.getAttribute("clienteId"));
-        
         var conta = new ContaDao().buscaContaCorrentePorCliente(clienteLogado);
-        
-        if(conta.getSaldo() >= emprestimo.getValor()){
-           emprestimo.setStatus(Status.Pago);
-           conta.setSaldo(conta.getSaldo() - emprestimo.getValor());
-           new EmprestimoDao().save(emprestimo);
-           new ContaDao().save(conta);
-        }else{
+        System.out.println("Valor empréstimo " + emprestimo.getValor().toString());
+        if (conta.getSaldo() >= emprestimo.getValor()) {
+            System.out.println("Valor empréstimo Dentro do IF" + emprestimo.getValor().toString());
+            emprestimo.setStatus(Status.Pago);
+            conta.setSaldo(conta.getSaldo() - emprestimo.getValor());
+            new EmprestimoDao().save(emprestimo);
+            new ContaDao().save(conta);
+        } else {
             System.out.println("Saldo insuficiente");
         }
-        
-        
-        
-        
+
     }
+
 }

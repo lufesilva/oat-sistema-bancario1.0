@@ -42,7 +42,7 @@
                                      required="true" requiredMessage="Informe o número!"/>
 
                         <p:outputLabel value="Valor:" style="margin-left: 30px"/>
-                        <p:inputText value="#{beanConta.conta.saldo}" style="width: 80%"
+                        <p:inputText value="#{beanConta.valor}" style="width: 80%"
                                      required="true" requiredMessage="Informe o valor!"/>
 
 
@@ -51,7 +51,7 @@
 
 
                     <p:commandButton value="Salvar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
-                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvar()}"
+                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvarTransContaCorrente()}"
                                      />
 
                     <p:commandButton value="Cancelar" actionListener="#{beanConta.cancelar()}" styleClass="ui-button-secondary"
@@ -77,7 +77,7 @@
                                      required="true" requiredMessage="Informe o número!"/>
 
                         <p:outputLabel value="Valor:" style="margin-left: 30px"/>
-                        <p:inputText value="#{beanConta.conta.saldo}" style="width: 80%"
+                        <p:inputText value="#{beanConta.valor}" style="width: 80%"
                                      required="true" requiredMessage="Informe o valor!"/>
 
 
@@ -86,7 +86,7 @@
 
 
                     <p:commandButton value="Salvar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
-                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvar()}"
+                                     styleClass="ui-button-secondary" actionListener="#{beanConta.salvarTransContaPoupanca()}"
                                      />
 
                     <p:commandButton value="Cancelar" actionListener="#{beanConta.cancelar()}" styleClass="ui-button-secondary"
