@@ -2,6 +2,8 @@ package br.com.unincor.web.model.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,6 +36,9 @@ public class Emprestimo implements Serializable{
     private Integer quantidadeParcelas;
     @Column(name = "valor_final")
     private Double valorFinal;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    private Integer parcela;
     
     @ManyToOne
     @JoinColumn(name = "id_conta")

@@ -15,7 +15,7 @@
 
 
                 <p:commandButton   styleClass="ui-button-secondary" value="Novo Empréstimo" style=" width: 200px"
-                                   process="@this"  actionListener="#{BeanEmprestimo.novo()}" oncomplete="PF('cadEmprestimoVar').show();" />
+                                   process="@this"  actionListener="#{beanEmprestimo.novo()}" oncomplete="PF('cadEmprestimoVar').show();" />
 
 
                 <p:dataTable var="customer" value="#{beanEmprestimo.emprestimos}" >
@@ -30,22 +30,17 @@
                             </div>
                         </p:column>
                     </p:headerRow>
-                    <p:column headerText="Código do Empréstimo">
-                        <h:outputText value="#{customer.representative.name}" />
-                    </p:column>
 
-                    <p:column headerText="Parcela">
-                        <span class="customer-badge status-#{customer.status.name().toLowerCase()}">#{customer.status}</span>
-                    </p:column>
+                    
 
                     <p:column headerText="Vencimento">
-                        <h:outputText value="#{customer.date}">
+                        <h:outputText value="#{beanEmprestimo.emprestimo}">
                             <f:convertDateTime pattern="MM/dd/yyyy" type="localDate"/>
                         </h:outputText>
                     </p:column>
 
                     <p:column headerText="Status">
-                        <span class="customer-badge status-#{customer.status.name().toLowerCase()}">#{customer.status}</span>
+                        <span class="customer-badge status-#{beanEmprestimo.emprestimo.status.toLowerCase()}">#{beanEmprestimo.emprestimo}</span>
                     </p:column>
                     <p:column headerText="Opções">
                         <p:commandButton value="Pagar" />
@@ -65,18 +60,18 @@
                 <p:dialog id="cadEmprestimo" header="Novo Empréstimo" widgetVar="cadEmprestimoVar" modal="true"
                           resizable="false" dynamic="true"   >
 
-                    <p:outputPanel rendered="#{BeanEmprestimo.emprestimo != null}" style="width: 500px">
+                    <p:outputPanel rendered="#{BeanEmprestimo.emprestimo == null}" style="width: 500px">
 
                         <p:growl /> 
 
                         <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
 
                             <p:outputLabel value="Valor do Empréstimo" style="margin-left: 5px"/>
-                            <p:inputText value="#{beanConta.numero}" style="width: 80%"
+                            <p:inputText value="#{beanEmprestimo.emprestimo.valorFinal}" style="width: 80%"
                                          required="true" requiredMessage="Informe o número!"/>
 
                             <p:outputLabel value="Quantidade de parcelas" style="margin-left: 30px"/>
-                            <p:inputText value="#{beanConta.conta.saldo}" style="width: 80%"
+                            <p:inputText value="#{beanEmprestimo.emprestimo.quantidadeParcelas}" style="width: 80%"
                                          required="true" requiredMessage="Informe o valor!" placeholder="Máximo de 48 parcelas  "/>
 
 
@@ -84,11 +79,11 @@
                         </p:panelGrid>
 
 
-                        <p:commandButton value="Verificar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
-                                         styleClass="ui-button-secondary" actionListener="#{beanConta.salvar()}"
+                        <p:commandButton value="Confirmar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
+                                         styleClass="ui-button-secondary" actionListener="#{beanEmprestimo.salvar()}"
                                          />
 
-                        <p:commandButton value="Cancelar" actionListener="#{beanConta.cancelar()}" styleClass="ui-button-secondary"
+                        <p:commandButton value="Cancelar" actionListener="#{beanEmprestimo.cancelar()}" styleClass="ui-button-secondary"
                                          update="painel" immediate="true"/>
 
                     </p:outputPanel>
