@@ -4,7 +4,6 @@ import br.com.unincor.web.model.dao.AgenciaDao;
 import br.com.unincor.web.model.dao.ContaCorrenteDao;
 import br.com.unincor.web.model.dao.ContaDao;
 import br.com.unincor.web.model.dao.ContaPoupancaDao;
-import br.com.unincor.web.model.dao.GenericDao;
 import br.com.unincor.web.model.dao.GerenteDao;
 import br.com.unincor.web.model.domain.Agencia;
 import br.com.unincor.web.model.domain.Cliente;
@@ -40,7 +39,6 @@ public class BeanConta extends AbstractBean<Conta> {
     private Integer numero;
     private Double valor;
     private Double sa;
-    
 
     public BeanConta() {
         super(new ContaDao());
@@ -72,7 +70,6 @@ public class BeanConta extends AbstractBean<Conta> {
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
     }
 
-   
     public void buscarContaCorrente(Cliente cliente) {
         this.contasCorrente = new ContaCorrenteDao().buscaContaCliente(cliente);
 
@@ -84,32 +81,42 @@ public class BeanConta extends AbstractBean<Conta> {
     }
 
     public void salvarContaCorrente(Cliente cliente) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
-        contaCorrente.setAgencia(agenciaSelecionada);
-        contaCorrente.setEnable(Boolean.TRUE);
-        contaCorrente.setCliente(cliente);
-        contaCorrente.setGerente(gerenteLogado);
-        contaCorrente.setTipo(Tipo.CORRENTE);
-        new ContaDao().save(contaCorrente);
-        buscar();
-        cancelar();
+        var contas = new ContaPoupancaDao().buscaContaCliente(cliente);
+        if (contas.size() >= 1) {
+            cancelar();
+        } else {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
+            contaCorrente.setAgencia(agenciaSelecionada);
+            contaCorrente.setEnable(Boolean.TRUE);
+            contaCorrente.setCliente(cliente);
+            contaCorrente.setGerente(gerenteLogado);
+            contaCorrente.setTipo(Tipo.CORRENTE);
+            new ContaDao().save(contaCorrente);
+            buscar();
+            cancelar();
+        }
 
     }
 
     public void salvarContaPoupanca(Cliente cliente) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
-        contaPoupanca.setAgencia(agenciaSelecionada);
-        contaPoupanca.setEnable(Boolean.TRUE);
-        contaPoupanca.setCliente(cliente);
-        contaPoupanca.setGerente(gerenteLogado);
-        contaPoupanca.setTipo(Tipo.POUPANCA);
-        new ContaDao().save(contaPoupanca);
-        buscar();
-        cancelar();
+        var contas = new ContaCorrenteDao().buscaContaCliente(cliente);
+        if (contas.size() >= 1) {
+            cancelar();
+        } else {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            var gerenteLogado = new GerenteDao().findById((Long) session.getAttribute("gerenteId"));
+            contaPoupanca.setAgencia(agenciaSelecionada);
+            contaPoupanca.setEnable(Boolean.TRUE);
+            contaPoupanca.setCliente(cliente);
+            contaPoupanca.setGerente(gerenteLogado);
+            contaPoupanca.setTipo(Tipo.POUPANCA);
+            new ContaDao().save(contaPoupanca);
+            buscar();
+            cancelar();
+        }
 
     }
 
