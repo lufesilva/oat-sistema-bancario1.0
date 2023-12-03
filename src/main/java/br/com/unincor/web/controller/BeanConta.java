@@ -81,7 +81,7 @@ public class BeanConta extends AbstractBean<Conta> {
     }
 
     public void salvarContaCorrente(Cliente cliente) {
-        var contas = new ContaPoupancaDao().buscaContaCliente(cliente);
+        var contas = new ContaCorrenteDao().buscaContaCliente(cliente);
         if (contas.size() >= 1) {
             cancelar();
         } else {
@@ -101,7 +101,7 @@ public class BeanConta extends AbstractBean<Conta> {
     }
 
     public void salvarContaPoupanca(Cliente cliente) {
-        var contas = new ContaCorrenteDao().buscaContaCliente(cliente);
+        var contas = new ContaPoupancaDao().buscaContaCliente(cliente);
         if (contas.size() >= 1) {
             cancelar();
         } else {

@@ -53,14 +53,15 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
         if (emprestimo.getQuantidadeParcelas() > 48 || conta.getLimite() < emprestimo.getValorFinal() || verificaEmprestimo()) {
             System.out.println("Não foi possível realizar o empréstimo!");
         } else {
+            conta.setSaldo(conta.getSaldo() + emprestimo.getValorFinal());
             for (int i = 0; i < emprestimo.getQuantidadeParcelas(); i++) {
                 emprestimo.setValorFinal(emprestimo.getValorFinal() * 1.0339);
 
             }
 
             emprestimo.setValor(emprestimo.getValorFinal() / emprestimo.getQuantidadeParcelas());
-            for (int i = 0; i < emprestimo.getQuantidadeParcelas(); i++) {
-                if (i == 0) {
+            for (int i = 1; i <= emprestimo.getQuantidadeParcelas(); i++) {
+                if (i == 1) {
                     emprestimo.setDataFinal(LocalDate.now().plusMonths(i));
                 } else {
                     emprestimo.setDataFinal(emprestimo.getDataFinal().plusMonths(i));
