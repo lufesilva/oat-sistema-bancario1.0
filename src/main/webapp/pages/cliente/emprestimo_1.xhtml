@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="../../template_cliente.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="titulo"> - Empréstimos</ui:define> 
+
+    <ui:define name="conteudo" >
+        <p:panel id="painel" header="Empréstimos" >
+            <h:form id="form-cadastro">
+
+
+                
+
+                <p:outputPanel rendered="#{beanEmprestimo.emprestimo != null}">
+             
+                   <p:commandButton   styleClass="ui-button-secondary" value="Novo Empréstimo" style=" width: 200px"
+                                   process="@this"  actionListener="#{beanEmprestimo.novo()}" oncomplete="PF('cadEmprestimoVar').show();" />
+
+                    <p:dataTable  value="#{beanEmprestimo.emprestimos}" style="margin-top: 15px" var="emp"
+                                  reflow="true" scrollable="true" scrollHeight="280">
+
+                        <p:column headerText="Parcela"  sortBy="#{emp.parcela}" >
+                            <p:outputLabel value="#{emp.parcela}"/>
+                        </p:column>
+
+                        <p:column headerText="Data Final: "  >
+                            <p:outputLabel value="#{emp.dataFinal}"/>
+                        </p:column>
+
+                        <p:column headerText="Status: "  sortBy="#{emp.status}"  >
+                         <p:outputLabel value="#{emp.status}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Opções">
+
+                         
+                            <p:commandButton value="Pagar" style="margin-right: 15px; width: 100px"   styleClass="ui-button-secondary"
+                                             actionListener="#{beanEmprestimo.pagarParcela(emp)}" process="@this" 
+                                             update="form-cadastro painel"/>
+                            
+
+
+                        </p:column>
+
+
+
+
+                    </p:dataTable>
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+         
+            </p:outputPanel>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+                <p:dialog id="cadEmprestimo" header="Novo Empréstimo" widgetVar="cadEmprestimoVar" modal="true"
+                          resizable="false" dynamic="true"   >
+
+                    <p:outputPanel rendered="#{BeanEmprestimo.emprestimo == null}" style="width: 500px">
+
+                        <p:growl /> 
+
+                        <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
+
+                            <p:outputLabel value="Valor do Empréstimo" style="margin-left: 5px"/>
+                            <p:inputText value="#{beanEmprestimo.emprestimo.valorFinal}" style="width: 80%"
+                                         required="true" requiredMessage="Informe o número!"/>
+
+                            <p:outputLabel value="Quantidade de parcelas" style="margin-left: 30px"/>
+                            <p:inputText value="#{beanEmprestimo.emprestimo.quantidadeParcelas}" style="width: 80%"
+                                         required="true" requiredMessage="Informe o valor!" placeholder="Máximo de 48 parcelas  "/>
+
+
+
+                        </p:panelGrid>
+
+
+                        <p:commandButton value="Confirmar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
+                                         styleClass="ui-button-secondary" actionListener="#{beanEmprestimo.salvar()}"
+                                         />
+
+                        <p:commandButton value="Cancelar" actionListener="#{beanEmprestimo.cancelar()}" styleClass="ui-button-secondary"
+                                         update="painel" immediate="true"/>
+
+                    </p:outputPanel>
+
+
+                </p:dialog>
+
+
+
+            </h:form>
+        </p:panel>
+
+
+
+
+
+
+
+
+
+    </ui:define>
+</ui:composition>
