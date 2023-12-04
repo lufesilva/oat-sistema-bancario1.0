@@ -74,6 +74,11 @@ public class BeanCliente extends AbstractBean<Cliente> {
         buscar();
 
     }
+    
+    
+    
+    
+    
 
     public void salvar() {
         if (!cliente.getSenha().equals(confirmarSenha)) {
@@ -86,6 +91,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
         new ClienteDao().save(cliente);
         cliente = new Cliente();
         buscar();
+        cancelar();
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
     }
 

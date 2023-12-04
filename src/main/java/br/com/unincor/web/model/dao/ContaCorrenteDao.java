@@ -17,4 +17,13 @@ public class ContaCorrenteDao extends GenericDao<ContaCorrente, Object>{
         return query.getResultList();
 
     }
+     
+      public ContaCorrente buscaContaCorrentePorCliente(Cliente cliente){
+        String sql = "from Conta c where c.cliente = :cliente and c.tipo = CORRENTE";
+        
+        Query query = getEntityManager().createQuery(sql, Cliente.class)
+                .setParameter("cliente", cliente);
+         var resultado = query.getResultList();
+        return resultado.isEmpty() ? null : (ContaCorrente) resultado.get(0);
+    }
       }

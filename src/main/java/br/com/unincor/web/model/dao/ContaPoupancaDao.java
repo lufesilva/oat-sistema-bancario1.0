@@ -17,5 +17,14 @@ public class ContaPoupancaDao extends GenericDao<ContaPoupanca, Long>{
         return query.getResultList();
 
     }
+      
+      public ContaPoupanca buscaContaPoupancaPorCliente(Cliente cliente){
+        String sql = "from Conta c where c.cliente = :cliente and c.tipo = POUPANCA";
+        
+        Query query = getEntityManager().createQuery(sql, Cliente.class)
+                .setParameter("cliente", cliente);
+         var resultado = query.getResultList();
+        return resultado.isEmpty() ? null : (ContaPoupanca) resultado.get(0);
+    }
     
 }

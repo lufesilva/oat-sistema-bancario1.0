@@ -6,6 +6,7 @@ br\com\unincor\web\main.class
 br\com\unincor\web\model\domain\Agencia.class
 br\com\unincor\web\view\utils\Criptografar.class
 br\com\unincor\web\controller\BeanGerente.class
+br\com\unincor\web\controller\BeanIndex.class
 br\com\unincor\web\model\domain\Gerente.class
 br\com\unincor\web\model\domain\Status.class
 br\com\unincor\web\filters\FiltroRequisicaoGerente.class

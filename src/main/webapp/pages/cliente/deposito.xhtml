@@ -40,14 +40,15 @@
 
 
                         <p:commandButton value="Salvar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
-                                         styleClass="ui-button-secondary" actionListener="#{beanConta.salvar()}"
+                                         styleClass="ui-button-secondary" actionListener="#{beanConta.salvar()}" onclick="window.location.reload();" 
+                                         update="form-cadastro painel"
                                          />
+
 
                         <p:commandButton value="Cancelar" actionListener="#{beanConta.cancelar()}" styleClass="ui-button-secondary"
                                          update="painel" immediate="true"/>
 
                     </p:outputPanel>
-
 
                 </p:dialog>
 

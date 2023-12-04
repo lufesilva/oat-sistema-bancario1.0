@@ -46,6 +46,8 @@ public class BeanAgencia extends AbstractBean<Agencia> {
         new AgenciaDao().save(agencia);
         agencia = new Agencia();
         buscar();
+        cancelar();
+        
 
     }
 

@@ -50,9 +50,9 @@
                     </p:panelGrid>
 
 
-                    <p:commandButton value="Salvar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
+                    <p:commandButton value="Transferir" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
                                      styleClass="ui-button-secondary" actionListener="#{beanConta.salvarTransContaCorrente()}"
-                                     />
+                                     update="painel" onclick="window.location.reload();"  />
 
                     <p:commandButton value="Cancelar" actionListener="#{beanConta.cancelar()}" styleClass="ui-button-secondary"
                                      update="painel" immediate="true"/>
@@ -85,9 +85,9 @@
                     </p:panelGrid>
 
 
-                    <p:commandButton value="Salvar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
+                    <p:commandButton value="Transferir" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
                                      styleClass="ui-button-secondary" actionListener="#{beanConta.salvarTransContaPoupanca()}"
-                                     />
+                                     update="painel" onclick="window.location.reload();"  />
 
                     <p:commandButton value="Cancelar" actionListener="#{beanConta.cancelar()}" styleClass="ui-button-secondary"
                                      update="painel" immediate="true"/>

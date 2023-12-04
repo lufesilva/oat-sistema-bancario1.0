@@ -16,9 +16,9 @@
             <h:form>
                 <p:menubar>
                     <p:menuitem value="Início" icon="pi pifw pi-home" outcome="/pages/cliente/inicio_cliente" />
-                    <p:menuitem value="Depósito" icon="pi pifw pi-th-large" outcome="/pages/cliente/deposito"/>
-                    <p:menuitem value="Transferencia" icon="pi pifw pi-th-large" outcome="/pages/cliente/transferencia"/>
-                    <p:menuitem value="Empréstimos" icon="pi pifw pi-database" outcome="/pages/cliente/emprestimo"/>
+                    <p:menuitem value="Depósito" icon="pi pi-wallet" outcome="/pages/cliente/deposito"/>
+                    <p:menuitem value="Transferencia" icon="pi pi-arrow-circle-right" outcome="/pages/cliente/transferencia"/>
+                    <p:menuitem value="Empréstimos" icon="pi pi-dollar" outcome="/pages/cliente/emprestimo"/>
                     <p:menuitem value="Quit" icon="pi pifw pi-power-off" actionListener="#{beanCliente.logout()}" />
                 </p:menubar>
             </h:form>
@@ -26,14 +26,14 @@
         <div>
             <div >
                 <p:panel >
-                    
-                    <p:outputLabel value="Bem vindo Obs;  Colocar aqui o nome do cliente e o saldo dele "  />
-                    
+                    <p:staticMessage severity="info" summary="Bem vindo, #{beanIndex.cliente.nome}" style="margin-left: 40%"/>
+                    <br/>
+                    <p:staticMessage severity="info" summary="Saldo Conta Corrente: #{beanIndex.contaCorrente.saldo} - - - Saldo Conta Poupanca #{beanIndex.contaPoupanca.saldo}" style="margin-left: 1%" />
+                 
                 </p:panel>
                 
                 
             </div>
-           
             <ui:insert name="conteudo"/> <!-- Local onde coloco o conteúdo -->
         </div>
     </h:body>

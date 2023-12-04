@@ -5,6 +5,7 @@ import br.com.unincor.web.model.dao.ContaDao;
 import br.com.unincor.web.model.dao.EmprestimoDao;
 import br.com.unincor.web.model.domain.Emprestimo;
 import br.com.unincor.web.model.domain.Status;
+import br.com.unincor.web.view.utils.Mensagens;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
 
         var conta = new ContaDao().buscaContaCorrentePorCliente(clienteLogado);
 
-        if (emprestimo.getQuantidadeParcelas() > 48 || conta.getLimite() < emprestimo.getValorFinal() || verificaEmprestimo()) {
+        if (emprestimo.getQuantidadeParcelas() <= 48 || conta.getLimite() < emprestimo.getValorFinal() || verificaEmprestimo()) {
             System.out.println("Não foi possível realizar o empréstimo!");
         } else {
             conta.setSaldo(conta.getSaldo() + emprestimo.getValorFinal());
@@ -119,6 +120,7 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
             new EmprestimoDao().save(emprestimo);
             new ContaDao().save(conta);
         } else {
+            Mensagens.erro(facesContext, "Saldo insuficiente");
             System.out.println("Saldo insuficiente");
         }
 

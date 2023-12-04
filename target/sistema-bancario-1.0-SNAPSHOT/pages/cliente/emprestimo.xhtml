@@ -69,18 +69,18 @@
                 <p:dialog id="cadEmprestimo" header="Novo Empréstimo" widgetVar="cadEmprestimoVar" modal="true"
                           resizable="false" dynamic="true"   >
 
-                    <p:outputPanel rendered="#{BeanEmprestimo.emprestimo == null}" style="width: 600px">
+                    <p:outputPanel rendered="#{beanEmprestimo.emprestimo != null}" style="width: 600px">
 
                         <p:growl /> 
 
                         <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
 
                             <p:outputLabel value="Valor do Empréstimo" style="margin-left: 1px"/>
-                            <p:inputText value="#{beanEmprestimo.emprestimo.valorFinal}" style="width: 80%"
+                            <p:inputText value="#{emprestimo.valorFinal}" style="width: 80%"
                                          required="true" requiredMessage="Informe o número!"/>
 
                             <p:outputLabel value="Quantidade de parcelas" />
-                            <p:inputText value="#{beanEmprestimo.emprestimo.quantidadeParcelas}" style="width: 80%"
+                            <p:inputText value="#{emprestimo.quantidadeParcelas}" style="width: 80%"
                                          required="true" requiredMessage="Informe o valor!" placeholder="Máximo de 48 parcelas  "/>
 
 

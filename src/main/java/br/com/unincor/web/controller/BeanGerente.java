@@ -101,6 +101,7 @@ public class BeanGerente extends AbstractBean<Gerente> {
         new GerenteDao().save(value);
         value = new Gerente();
         buscar();
+        cancelar();
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
     }
     
