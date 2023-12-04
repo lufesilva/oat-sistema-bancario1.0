@@ -55,7 +55,7 @@
                     <p:column headerText="Opções">
                         <p:commandButton value="Pagar" style="margin-right: 15px; width: 100px"   styleClass="ui-button-secondary"
                                          actionListener="#{beanEmprestimo.pagarParcela(emprestimo)}" process="@this"  disabled="#{emprestimo.status eq 'Pago'}"
-                                         update="form-cadastro painel"/>
+                                         update="form-cadastro painel"  onclick="window.location.reload()"/>
                     </p:column>
                 </p:dataTable>
 
@@ -69,18 +69,18 @@
                 <p:dialog id="cadEmprestimo" header="Novo Empréstimo" widgetVar="cadEmprestimoVar" modal="true"
                           resizable="false" dynamic="true"   >
 
-                    <p:outputPanel rendered="#{beanEmprestimo.emprestimo != null}" style="width: 600px">
+                    <p:outputPanel rendered="#{BeanEmprestimo.emprestimo == null}" style="width: 600px">
 
                         <p:growl /> 
 
                         <p:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8">
 
                             <p:outputLabel value="Valor do Empréstimo" style="margin-left: 1px"/>
-                            <p:inputText value="#{emprestimo.valorFinal}" style="width: 80%"
+                            <p:inputText value="#{beanEmprestimo.emprestimo.valorFinal}" style="width: 80%"
                                          required="true" requiredMessage="Informe o número!"/>
 
                             <p:outputLabel value="Quantidade de parcelas" />
-                            <p:inputText value="#{emprestimo.quantidadeParcelas}" style="width: 80%"
+                            <p:inputText value="#{beanEmprestimo.emprestimo.quantidadeParcelas}" style="width: 80%"
                                          required="true" requiredMessage="Informe o valor!" placeholder="Máximo de 48 parcelas  "/>
 
 
@@ -90,7 +90,8 @@
 
                         <p:commandButton value="Confirmar" style="margin-left: 35%; margin-right: 5px; margin-top: 10px"
                                          styleClass="ui-button-secondary" actionListener="#{beanEmprestimo.salvar()}"
-                                         update="form-cadastro painel" process="@this"/>
+                                         update="form-cadastro painel" onclick="window.location.reload()"
+                                         />
 
                         <p:commandButton value="Cancelar" actionListener="#{beanEmprestimo.cancelar()}" styleClass="ui-button-secondary"
                                          update="painel" immediate="true"/>

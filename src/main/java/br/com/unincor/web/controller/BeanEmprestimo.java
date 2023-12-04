@@ -33,6 +33,7 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
 
     @PostConstruct
     void init() {
+        // emprestimo = new Emprestimo();
         novo();
 //        this.buscar();
         buscarEmprestimos();
@@ -45,7 +46,7 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
     }
 
     public void buscarEmprestimos() {
-         FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         var clienteLogado = new ClienteDao().findById((Long) session.getAttribute("clienteId"));
 
@@ -63,7 +64,8 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
 
         var conta = new ContaDao().buscaContaCorrentePorCliente(clienteLogado);
 
-        if (emprestimo.getQuantidadeParcelas() <= 48 || conta.getLimite() < emprestimo.getValorFinal() || verificaEmprestimo()) {
+        if (emprestimo.getQuantidadeParcelas() > 48 || conta.getLimite() < emprestimo.getValorFinal() || verificaEmprestimo()) {
+            Mensagens.erro(FacesContext.getCurrentInstance(), "Não foi possível realizar o empréstimo!");
             System.out.println("Não foi possível realizar o empréstimo!");
         } else {
             conta.setSaldo(conta.getSaldo() + emprestimo.getValorFinal());
@@ -84,6 +86,8 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
                 emprestimo.setParcela(i);
                 emprestimo.setStatus(Status.Pendente);
                 new EmprestimoDao().save(emprestimo);
+                buscar();
+                cancelar();
             }
         }
 
@@ -120,7 +124,8 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
             new EmprestimoDao().save(emprestimo);
             new ContaDao().save(conta);
         } else {
-            Mensagens.erro(facesContext, "Saldo insuficiente");
+            Mensagens.erro(FacesContext.getCurrentInstance(), "Saldo insuficiente");
+
             System.out.println("Saldo insuficiente");
         }
 
