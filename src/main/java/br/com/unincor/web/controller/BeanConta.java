@@ -95,9 +95,10 @@ public class BeanConta extends AbstractBean<Conta> {
         buscaContaPorNumero();
 
         valor += sa;
-        contaDestino.setSaldo(valor);
+        contaDestino.setSaldo(contaDestino.getSaldo() + valor);
         conta.setSaldo(conta.getSaldo() - valor);
         new ContaDao().save(conta);
+        new ContaDao().save(contaDestino);
         buscar();
         cancelar();
 
@@ -113,9 +114,10 @@ public class BeanConta extends AbstractBean<Conta> {
         buscaContaPorNumero();
 
         valor += sa;
-        contaDestino.setSaldo(valor);
+        contaDestino.setSaldo(contaDestino.getSaldo() + valor);
         conta.setSaldo(conta.getSaldo() - valor);
         new ContaDao().save(conta);
+        new ContaDao().save(contaDestino);
         buscar();
         cancelar();
 

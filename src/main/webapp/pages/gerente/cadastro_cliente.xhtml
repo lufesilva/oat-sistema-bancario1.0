@@ -106,7 +106,7 @@
                             <p:dialog id="contaCorrente" header="Corrente" widgetVar="cadastroContaCorrenteVar" modal="true"
                                       resizable="false" dynamic="true" >
 
-                                <p:outputPanel rendered="#{beanConta.conta == null}">
+                                <p:outputPanel rendered="#{beanConta.conta != null}">
 
                                     <p:commandButton   styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
                                                        process="@this"  actionListener="#{beanConta.novo()}" disabled="#{not empty beanConta.contasCorrente}"
@@ -177,7 +177,7 @@
                             <p:dialog id="contaPoupanca" header="Poupança" widgetVar="cadastroContaPoupancaVar" modal="true"
                                       resizable="false" dynamic="true"  >
 
-                                <p:outputPanel rendered="#{beanConta.conta == null}">
+                                <p:outputPanel rendered="#{beanConta.conta != null}">
 
                                     <p:commandButton  styleClass="ui-button-secondary" value="Criar Conta" style="width: 150px"
                                                       process="@this"  actionListener="#{beanConta.novo()}" disabled="#{not empty beanConta.contasPoupanca}"
