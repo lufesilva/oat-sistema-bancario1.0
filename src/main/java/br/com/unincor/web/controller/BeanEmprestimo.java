@@ -10,13 +10,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.component.message.Message;
 
 @ManagedBean
 @ViewScoped
@@ -65,8 +65,10 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
         var conta = new ContaDao().buscaContaCorrentePorCliente(clienteLogado);
 
         if (emprestimo.getQuantidadeParcelas() > 48 || conta.getLimite() < emprestimo.getValorFinal() || verificaEmprestimo()) {
-            Mensagens.erro(FacesContext.getCurrentInstance(), "Não foi possível realizar o empréstimo!");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível realizar o empréstimo!", null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
             System.out.println("Não foi possível realizar o empréstimo!");
+            
         } else {
             conta.setSaldo(conta.getSaldo() + emprestimo.getValorFinal());
             for (int i = 0; i < emprestimo.getQuantidadeParcelas(); i++) {
@@ -116,15 +118,17 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         var clienteLogado = new ClienteDao().findById((Long) session.getAttribute("clienteId"));
         var conta = new ContaDao().buscaContaCorrentePorCliente(clienteLogado);
-        System.out.println("Valor empréstimo " + emprestimo.getValor().toString());
+       
         if (conta.getSaldo() >= emprestimo.getValor()) {
-            System.out.println("Valor empréstimo Dentro do IF" + emprestimo.getValor().toString());
+            
             emprestimo.setStatus(Status.Pago);
             conta.setSaldo(conta.getSaldo() - emprestimo.getValor());
             new EmprestimoDao().save(emprestimo);
             new ContaDao().save(conta);
         } else {
-            Mensagens.erro(FacesContext.getCurrentInstance(), "Saldo insuficiente");
+           
+           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Saldo Insuficiente", null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
 
             System.out.println("Saldo insuficiente");
         }

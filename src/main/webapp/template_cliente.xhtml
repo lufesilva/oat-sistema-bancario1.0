@@ -26,11 +26,14 @@
         <div>
             <div >
                 <p:panel >
-                    <p:staticMessage severity="info" summary="Bem vindo, #{beanIndex.cliente.nome}" style="margin-left: 40%"/>
+                   
                     
-                    <br/>
-                    <p:staticMessage severity="info" summary="Saldo Conta Corrente: #{beanIndex.contaCorrente.saldo} - - - Saldo Conta Poupanca #{beanIndex.contaPoupanca.saldo}" style="margin-left: 1%" />
-                 
+                    <p:staticMessage severity="info"  summary="Bem vindo, #{beanIndex.cliente.nome}"  detail="---> Saldo Conta Poupanca #{beanIndex.contaPoupanca.saldo} - - - Saldo Conta Corrente: #{beanIndex.contaCorrente.saldo} - - -  Limite: #{beanIndex.contaCorrente.limite}"  style="width: 100%">
+                    
+                    
+                    </p:staticMessage>
+                    <!--<p:staticMessage severity="info" summary="Saldo Conta Poupanca #{beanIndex.contaPoupanca.saldo} - - - Saldo Conta Corrente: #{beanIndex.contaCorrente.saldo} - - -  Limite: #{beanIndex.contaCorrente.limite}" style="margin-left: 1%" />-->
+                  
                 </p:panel>
                 
                 
