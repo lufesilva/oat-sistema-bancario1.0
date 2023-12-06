@@ -98,6 +98,7 @@ public class BeanGerente extends AbstractBean<Gerente> {
         var senha = value.getSenha();
         var senhaCriptografada = Criptografar.encryp(senha);
         value.setSenha(senhaCriptografada);
+        value.setEnable(Boolean.TRUE);
         new GerenteDao().save(value);
         value = new Gerente();
         buscar();
@@ -107,7 +108,14 @@ public class BeanGerente extends AbstractBean<Gerente> {
     
     @Override
     public void buscar(){
-        this.gerentes = new GerenteDao().findAll();
+        this.gerentes = new GerenteDao().buscaGerenteAtivo();
+    }
+    
+    @Override
+    public void remover(Gerente gerente){
+        gerente.setEnable(Boolean.FALSE);
+        new GerenteDao().save(gerente);
+        buscar();
     }
 
 }

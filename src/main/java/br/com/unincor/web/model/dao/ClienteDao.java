@@ -3,6 +3,7 @@ package br.com.unincor.web.model.dao;
 
 import br.com.unincor.web.model.domain.Cliente;
 import jakarta.persistence.Query;
+import java.util.List;
 
 
 public class ClienteDao extends GenericDao<Cliente, Long>{
@@ -15,6 +16,11 @@ public class ClienteDao extends GenericDao<Cliente, Long>{
         return resultado.isEmpty() ? null : (Cliente) resultado.get(0);
     }
       
+        public List<Cliente> buscaClienteAtivo(){
+            String sql = "from Cliente c where c.enable = true";
         
+        Query query = getEntityManager().createQuery(sql, Cliente.class);
+        return query.getResultList();
+        }
     
 }

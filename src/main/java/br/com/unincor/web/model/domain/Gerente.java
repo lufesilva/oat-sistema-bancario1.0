@@ -37,6 +37,7 @@ public class Gerente implements Serializable{
     private String email;
     private String cpf;
     private String senha;
+    private Boolean enable;
     
     @ManyToMany
     @JoinTable

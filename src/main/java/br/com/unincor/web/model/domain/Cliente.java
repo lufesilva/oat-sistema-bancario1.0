@@ -35,6 +35,7 @@ public class Cliente implements Serializable{
     private String email;
     private String cpf;
     private String senha;
+    private Boolean enable;
     
     @OneToMany(mappedBy = "cliente")
     private Set<Conta> contas = new HashSet<>();

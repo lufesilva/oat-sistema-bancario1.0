@@ -34,6 +34,7 @@ public class Agencia implements Serializable{
     private Long id;
     private String nome;
     private String codigo;
+    private Boolean enable;
     
     @OneToMany(mappedBy = "agencia")
     private Set<Conta> contas = new HashSet<>();

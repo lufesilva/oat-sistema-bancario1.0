@@ -38,11 +38,11 @@ public class BeanAgencia extends AbstractBean<Agencia> {
     }
 
     public void buscar() {
-        agencias = new AgenciaDao().findAll();
+        agencias = new AgenciaDao().buscarAgenciaAtiva();
     }
 
     public void salvar() {
-
+        agencia.setEnable(Boolean.TRUE);
         new AgenciaDao().save(agencia);
         agencia = new Agencia();
         buscar();
@@ -54,6 +54,13 @@ public class BeanAgencia extends AbstractBean<Agencia> {
     public void editar(Agencia agencia) {
 
         this.agencia = agencia;
+    }
+    
+    @Override
+    public void remover(Agencia agencia){
+        agencia.setEnable(Boolean.FALSE);
+        new AgenciaDao().save(agencia);
+        buscar();
     }
 
 }

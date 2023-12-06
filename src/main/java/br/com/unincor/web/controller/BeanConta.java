@@ -13,6 +13,7 @@ import br.com.unincor.web.model.domain.ContaCorrente;
 import br.com.unincor.web.model.domain.ContaPoupanca;
 import br.com.unincor.web.model.domain.Gerente;
 import br.com.unincor.web.model.domain.Tipo;
+import br.com.unincor.web.view.utils.Mensagens;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +68,7 @@ public class BeanConta extends AbstractBean<Conta> {
         buscaContaComNumero();
         valor += sa;
         conta.setSaldo(valor);
+        conta.setEnable(Boolean.FALSE);
         new ContaDao().save(conta);
         buscar();
         cancelar();
@@ -93,14 +95,20 @@ public class BeanConta extends AbstractBean<Conta> {
 
         var conta = new ContaDao().buscaContaPoupancaPorCliente(clienteLogado);
         buscaContaPorNumero();
-
-        valor += sa;
+        
+        if(conta.getSaldo() >= valor){
+            valor += sa;
         contaDestino.setSaldo(contaDestino.getSaldo() + valor);
         conta.setSaldo(conta.getSaldo() - valor);
         new ContaDao().save(conta);
         new ContaDao().save(contaDestino);
         buscar();
         cancelar();
+        }else{
+            Mensagens.erro(facesContext, "Saldo Insuficiente");
+        }
+        
+        
 
     }
 
@@ -114,12 +122,17 @@ public class BeanConta extends AbstractBean<Conta> {
         buscaContaPorNumero();
 
         valor += sa;
-        contaDestino.setSaldo(contaDestino.getSaldo() + valor);
+        if(conta.getSaldo() >= valor){
+            contaDestino.setSaldo(contaDestino.getSaldo() + valor);
         conta.setSaldo(conta.getSaldo() - valor);
         new ContaDao().save(conta);
         new ContaDao().save(contaDestino);
         buscar();
         cancelar();
+        }else {
+            Mensagens.erro(facesContext,"Saldo Insuficiente" );
+        }
+        
 
     }
 
@@ -193,5 +206,16 @@ public class BeanConta extends AbstractBean<Conta> {
         conta = new ContaDao().buscaContaPorNumero(numero);
         sa = conta.getSaldo();
         System.out.println(sa);
+    }
+    
+    @Override 
+    public void remover(Conta conta){
+        conta.setEnable(Boolean.FALSE);
+        new ContaDao().save(conta);
+    }
+    
+    @Override
+    public void buscar(){
+        values = new ContaDao().buscaContaAtiva();
     }
 }

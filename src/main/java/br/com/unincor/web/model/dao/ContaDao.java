@@ -9,8 +9,15 @@ import java.util.List;
 
 
 public class ContaDao extends GenericDao<Conta, Long>{
+    
+    public List<Conta> buscaContaAtiva() {
+        String sql = "from Conta c where c.enable = true";
+        
+        Query query = getEntityManager().createQuery(sql, Cliente.class);
+         return query.getResultList();
+            }
     public List<Conta> buscaContaCliente(Cliente cliente){
-        String sql = "from Conta c where c.cliente = :cliente";
+        String sql = "from Conta c where c.cliente = :cliente and c.enable = true";
         
         Query query = getEntityManager().createQuery(sql, Cliente.class)
                 .setParameter("cliente", cliente);
@@ -19,7 +26,7 @@ public class ContaDao extends GenericDao<Conta, Long>{
     }
 
     public Conta buscaContaPorNumero(Integer numero) {
-        String sql = "from Conta c where c.numero = :numero";
+        String sql = "from Conta c where c.numero = :numero and c.enable = true";
         
         Query query = getEntityManager().createQuery(sql, Cliente.class)
                 .setParameter("numero", numero);
@@ -28,7 +35,7 @@ public class ContaDao extends GenericDao<Conta, Long>{
             }
     
     public ContaCorrente buscaContaCorrentePorCliente(Cliente cliente){
-        String sql = "from Conta c where c.cliente = :cliente and c.tipo = CORRENTE";
+        String sql = "from Conta c where c.cliente = :cliente and c.tipo = CORRENTE and c.enable = true";
         
         Query query = getEntityManager().createQuery(sql, Cliente.class)
                 .setParameter("cliente", cliente);
@@ -37,7 +44,7 @@ public class ContaDao extends GenericDao<Conta, Long>{
     }
     
     public ContaCorrente buscaContaPoupancaPorCliente(Cliente cliente){
-        String sql = "from Conta c where c.cliente = :cliente and c.tipo = POUPANCA";
+        String sql = "from Conta c where c.cliente = :cliente and c.tipo = POUPANCA and c.enable = true";
         
         Query query = getEntityManager().createQuery(sql, Cliente.class)
                 .setParameter("cliente", cliente);
@@ -46,7 +53,7 @@ public class ContaDao extends GenericDao<Conta, Long>{
     }
     
     public List<Emprestimo> buscaEmprestimoPorCliente(Conta conta){
-        String sql = "from Emprestimo e where e.conta = :conta and e.status = Pendente";
+        String sql = "from Emprestimo e where e.conta = :conta and e.status = Pendente and e.conta.enable = true";
         
         Query query = getEntityManager().createQuery(sql, Conta.class)
                 .setParameter("conta", conta);
@@ -55,7 +62,7 @@ public class ContaDao extends GenericDao<Conta, Long>{
     }
     
      public List<Emprestimo> buscaEmprestimo(Conta conta){
-        String sql = "from Emprestimo e where e.conta = :conta";
+        String sql = "from Emprestimo e where e.conta = :conta and e.conta.enable = true";
         
         Query query = getEntityManager().createQuery(sql, Conta.class)
                 .setParameter("conta", conta);

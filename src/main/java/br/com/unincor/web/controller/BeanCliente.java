@@ -56,7 +56,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
     }
 
     public void buscar() {
-        clientes = new ClienteDao().findAll();
+        clientes = new ClienteDao().buscaClienteAtivo();
     }
 
     public void editar(Cliente cliente) {
@@ -67,10 +67,11 @@ public class BeanCliente extends AbstractBean<Cliente> {
     public void cancelar() {
         cliente = null;
     }
-
+    
+    @Override
     public void remover(Cliente cliente) {
-
-        new ClienteDao().delete(cliente.getId());
+        cliente.setEnable(Boolean.FALSE);
+        new ClienteDao().save(cliente);
         buscar();
 
     }
@@ -88,6 +89,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
         var senha = cliente.getSenha();
         var senhaCriptografada = Criptografar.encryp(senha);
         cliente.setSenha(senhaCriptografada);
+        cliente.setEnable(Boolean.TRUE);
         new ClienteDao().save(cliente);
         cliente = new Cliente();
         buscar();
