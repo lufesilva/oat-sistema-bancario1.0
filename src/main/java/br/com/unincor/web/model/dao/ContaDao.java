@@ -62,7 +62,7 @@ public class ContaDao extends GenericDao<Conta, Long>{
     }
     
      public List<Emprestimo> buscaEmprestimo(Conta conta){
-        String sql = "from Emprestimo e where e.conta = :conta and e.conta.enable = true";
+        String sql = "from Emprestimo e where e.conta = :conta";
         
         Query query = getEntityManager().createQuery(sql, Conta.class)
                 .setParameter("conta", conta);

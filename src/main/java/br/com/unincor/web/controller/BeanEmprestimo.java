@@ -33,7 +33,7 @@ public class BeanEmprestimo extends AbstractBean<Emprestimo> {
 
     @PostConstruct
     void init() {
-        // emprestimo = new Emprestimo();
+       //  emprestimo = new Emprestimo();
         novo();
 //        this.buscar();
         buscarEmprestimos();
