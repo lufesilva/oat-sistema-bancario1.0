@@ -75,18 +75,7 @@ public class BeanConta extends AbstractBean<Conta> {
         //PrimeFaces.current().executeScript("PF('dlg3').hide()");//fechar o dialog 
     }
 
-//    @Override
-//    public void salvar() {
-//        buscaContaPorNumero();
-//
-//        valor += sa;
-//        contaDestino.setSaldo(valor);
-//        conta.setSaldo(conta.getSaldo() - valor);
-//        new ContaDao().save(conta);
-//        buscar();
-//        cancelar();
-//
-//    }
+
     public void salvarTransContaPoupanca() {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();

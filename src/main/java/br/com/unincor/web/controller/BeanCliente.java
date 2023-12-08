@@ -99,7 +99,7 @@ public class BeanCliente extends AbstractBean<Cliente> {
 
     public void verificaSenha() {
         var clienteLogado = new ClienteDao().buscarClientePorLogin(emailLogin);
-        if (!clienteLogado.getSenha().equals(Criptografar.encryp(senhaLogin))) {
+        if (clienteLogado == null || !clienteLogado.getSenha().equals(Criptografar.encryp(senhaLogin))) {
             Mensagens.erro(FacesContext.getCurrentInstance(), "Login e/ou senha incorretos!");
             return;
         }

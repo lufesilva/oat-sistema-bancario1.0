@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ContaPoupancaDao extends GenericDao<ContaPoupanca, Long>{
       public List<ContaPoupanca> buscaContaCliente(Cliente cliente){
-        String sql = "from Conta c where c.cliente = :cliente and c.tipo = POUPANCA";
+        String sql = "from Conta c where c.cliente = :cliente and c.tipo = POUPANCA and c.enable = true";
         
         Query query = getEntityManager().createQuery(sql, Cliente.class)
                 .setParameter("cliente", cliente);

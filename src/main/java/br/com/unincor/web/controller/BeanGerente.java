@@ -53,7 +53,7 @@ public class BeanGerente extends AbstractBean<Gerente> {
 
     public void verificaSenha() {
         var gerenteLogado = new GerenteDao().buscarGerentePorLogin(emailLogin);
-        if (!gerenteLogado.getSenha().equals(Criptografar.encryp(senhaLogin))) {
+        if (gerenteLogado == null || !gerenteLogado.getSenha().equals(Criptografar.encryp(senhaLogin))) {
             Mensagens.erro(FacesContext.getCurrentInstance(), "Login e/ou senha incorretos!");
             return;
         }

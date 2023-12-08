@@ -12,20 +12,9 @@
 
         <div style="margin-left: 21%">
             <h:panelGrid columns="4" style="margin-top: 20px">
-                <p:card style="width: 15em; height: 25em; text-align: center">
-                    <f:facet name="header">
-                        <img alt="user header" src="../../imge/img01.jpg"/>
-                    </f:facet>
-                    <f:facet name="title">
-                       Cadastro de Clientes
-                    </f:facet>
-                    <f:facet name="subtitle">
-                        Cadastre clientes e Gerencie suas contas
-                    </f:facet>
-                    <p:commandButton value="Acessar" styleClass="ui-button-secondary"  />
-                </p:card>
+              
 
-                <p:card style="width: 15em; height: 25em; margin-left: 30px; text-align: center">
+                <p:card style="width: 15em; height: 25em; text-align: center">
                     <f:facet name="header">
                         <img alt="user header" src="../../imge/img01.jpg"/>           
                     </f:facet>
@@ -35,7 +24,20 @@
                     <f:facet name="subtitle">
                        Cadastre novos Gerentes
                     </f:facet>
-                    <p:commandButton value="Acessar" styleClass="ui-button-secondary"  />
+                      <p:button value="Acessar" styleClass="ui-button-secondary" style="margin-left: 5%" outcome="cadastro_gerente"/>
+                </p:card>
+                
+                  <p:card style="width: 15em; height: 25em; margin-left: 30px; text-align: center" >
+                    <f:facet name="header">
+                        <img alt="user header" src="../../imge/img01.jpg"/>
+                    </f:facet>
+                    <f:facet name="title">
+                       Cadastro de Clientes
+                    </f:facet>
+                    <f:facet name="subtitle">
+                        Cadastre clientes e Gerencie suas contas
+                    </f:facet>
+                 <p:button value="Acessar" styleClass="ui-button-secondary" style="margin-left: 5%" outcome="cadastro_cliente"/>
                 </p:card>
 
                 <p:card style="width: 15em; height: 25em; margin-left: 30px; text-align: center">
@@ -48,7 +50,7 @@
                     <f:facet name="subtitle">
                         cadastre novas Agências
                     </f:facet>
-                    <p:commandButton value="Acessar" styleClass="ui-button-secondary" />
+                      <p:button value="Acessar" styleClass="ui-button-secondary" style="margin-left: 5%" outcome="cadastro_agencia"/>
                 </p:card>
 
               

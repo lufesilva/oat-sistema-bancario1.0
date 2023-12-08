@@ -31,6 +31,7 @@
 
                     <p:commandButton value="Salvar" style="margin-left: 80%; margin-right: 5px; margin-top: 10px"
                                      styleClass="ui-button-secondary" actionListener="#{beanAgencia.salvar()}"
+                                      onclick="setTimeout(function(){ window.location.reload(); }, 10);"
                                      update="@form tabela painel"/>
 
                     <p:commandButton value="Cancelar" actionListener="#{beanAgencia.cancelar()}" styleClass="ui-button-secondary"
@@ -63,7 +64,7 @@
                             <p:commandButton icon="pi pi-trash" style="width: 40px" styleClass="ui-button-secondary"  actionListener="#{beanAgencia.remover(agen)}"
                                              update="form-cadastro painel">
 
-                                <p:confirm header="Confirmação" message="Deseja remover a Agência: #{agen.nome}?" icon="pi pi-info-circle"/>
+                                <p:confirm header="Confirmação" message="Deseja remover a agência #{agen.nome}?" icon="pi pi-info-circle"/>
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
